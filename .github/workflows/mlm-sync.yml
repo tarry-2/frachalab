@@ -1,0 +1,34 @@
+name: 공정위 다단계판매 일일 갱신
+on:
+  schedule:
+    - cron: '27 18 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ftc-daily-mlm
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: 공식 공시 내려받기
+        run: |
+          pip install -r scripts/requirements-mlm.txt
+          python scripts/sync-mlm.py
+      - name: 갱신 데이터 반영
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/mlm.json
+          git diff --cached --quiet && exit 0
+          git commit -m "프차랩 공정위 다단계판매 일일 갱신"
+          git pull --rebase origin master
+          git push origin HEAD:master

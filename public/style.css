@@ -31,3 +31,11 @@
 #theme-toggle{min-width:65px}
 img.logo{background:#fff}
 @media(max-width:420px){.mast-inner nav{gap:7px;font-size:.78rem}.mast-inner nav button{padding-inline:7px}#theme-toggle{min-width:51px}}
+
+.mast-inner nav a[aria-current=page]{color:var(--mint);text-decoration:underline;text-underline-offset:5px}
+.registration{display:block;font-size:.8rem;color:var(--muted);margin-top:4px}
+#mlm-panel-body{padding:20px;overflow:auto}
+#mlm-panel-body h3{margin-top:24px}
+#mlm-panel-body .table-frame td,#mlm-panel-body .detail-grid dd{white-space:normal;overflow-wrap:anywhere}
+#mlm-total{font-size:clamp(.75rem,1.6vw,1rem);overflow-wrap:anywhere}
+@media(max-width:520px){.mast-inner:has(#open-compare){flex-wrap:wrap;padding-block:10px;gap:8px}.mast-inner:has(#open-compare) nav{flex-wrap:wrap;gap:9px}}

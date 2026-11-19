@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="공정거래위원회 다단계판매업체별 매출 순위와 상세 공시">
+<title>다단계판매 순위 | 프차랩</title>
+<script>
+try {
+  const saved = localStorage.getItem('frachalab-theme');
+  if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+} catch {}
+</script>
+<link rel="stylesheet" href="/style.css">
+<script type="module" src="/mlm.js"></script>
+</head>
+<body>
+<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">프</span>프차랩</a><nav aria-label="주 메뉴"><a href="/#ranking">브랜드 순위</a><a href="/mlm.html" aria-current="page">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button></nav></div></header>
+<main>
+<section class="hero"><div class="wrap hero-inner"><div><p class="kicker">공정거래위원회 사업자 정보공개</p><h1>다단계판매업체<br>매출 순위</h1><p class="lead">공시 대상 업체의 매출, 판매원, 후원수당과 재무 현황을 살펴봐.</p></div><dl class="snapshot"><div><dt>실적 기준</dt><dd id="mlm-reference">—</dd></div><div><dt>공시 업체</dt><dd id="mlm-company-count">—</dd></div><div><dt>다단계 매출 합계</dt><dd id="mlm-total">—</dd></div></dl></div></section>
+<div class="wrap content">
+<p id="mlm-status" class="data-status" role="status">공시 자료를 불러오는 중이야.</p>
+<section aria-labelledby="mlm-ranking">
+<div class="section-head"><div><h2 id="mlm-ranking">업체 전체 순위</h2><p>부가가치세 포함 다단계판매 매출 기준이야. 회사명을 누르면 상세 공시를 볼 수 있어.</p></div></div>
+<div class="filters"><label class="search">회사명·등록번호 검색<input type="search" id="mlm-query" placeholder="예: 한국암웨이"></label><label>실적 연도<select id="mlm-year"></select></label></div>
+<div class="table-meta"><p id="mlm-results-count" aria-live="polite"></p></div>
+<div class="table-frame" tabindex="0" aria-label="다단계판매 업체별 순위"><table><thead><tr><th scope="col">순위</th><th scope="col">회사명</th><th scope="col">다단계 매출</th><th scope="col">등록 판매원</th><th scope="col">후원수당 총액</th></tr></thead><tbody id="mlm-results"></tbody></table></div>
+<div class="pager"><button id="mlm-prev" type="button" disabled>이전</button><span id="mlm-page"></span><button id="mlm-next" type="button" disabled>다음</button></div>
+</section>
+<section class="sources"><h2>공시 범위와 출처</h2><p>각 연도 순위는 공정위가 해당 실적을 공개한 업체 전체를 대상으로 계산해. 자료는 24시간마다 확인하고, 실적 연도는 공정위가 새 연도 자료를 공개할 때 추가돼.</p><p><a id="mlm-source" href="https://www.ftc.go.kr/www/selectBizMtlvlOpenList.do?key=226">공정위 사업자 공개 자료</a><a id="mlm-download" hidden>해당 연도 원본 엑셀</a></p></section>
+</div>
+</main>
+<dialog id="mlm-panel" aria-labelledby="mlm-panel-title"><header class="dialog-head"><h2 id="mlm-panel-title"></h2><form method="dialog"><button>닫기</button></form></header><div id="mlm-panel-body"></div></dialog>
+<footer><div class="wrap">프차랩 · 다단계판매업체 공시 비교</div></footer>
+</body>
+</html>
