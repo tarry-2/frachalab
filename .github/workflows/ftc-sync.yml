@@ -1,0 +1,36 @@
+name: 공정위 가맹정보 일일 갱신
+on:
+  schedule:
+    - cron: '17 18 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ftc-daily-catalog
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: 공정위 자료 수집
+        run: node scripts/sync-ftc.mjs
+        env:
+          FTC_DATA_SERVICE_KEY: ${{ secrets.FTC_DATA_SERVICE_KEY }}
+          FTC_YEARS: ${{ vars.FTC_YEARS }}
+          FTC_REVENUE_UNIT_WON: ${{ vars.FTC_REVENUE_UNIT_WON }}
+          FTC_COST_UNIT_WON: ${{ vars.FTC_COST_UNIT_WON }}
+      - name: 갱신 데이터 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/catalog.json
+          git diff --cached --quiet && exit 0
+          git commit -m "프차랩 공정위 가맹정보 일일 갱신"
+          git push origin HEAD:master
