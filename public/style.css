@@ -51,3 +51,9 @@ img.logo{background:#fff}
 .disclosure-source{display:inline-block;margin-top:11px;font-size:.87rem}
 @media(max-width:840px){.disclosure-filters{grid-template-columns:1fr 1fr}.disclosure-filters>.search{grid-column:1/-1}}
 @media(max-width:620px){.disclosure-results{grid-template-columns:1fr}.mast-inner{flex-wrap:wrap;padding-block:10px;gap:8px}.mast-inner nav{flex-wrap:wrap;gap:9px}}
+
+.brand>.mark{flex:none;font-family:serif;font-size:1.2rem}
+.brand-copy{display:grid;gap:3px}
+.brand-copy strong{font-size:1.25rem;line-height:1.15;letter-spacing:-.04em}
+.brand-copy small{color:#d1e9df;font-size:.76rem;font-weight:550;line-height:1.25;white-space:normal;word-break:keep-all}
+@media(max-width:760px){.mast-inner{flex-wrap:wrap;padding-block:12px;gap:10px}.mast-inner nav{flex-wrap:wrap}}

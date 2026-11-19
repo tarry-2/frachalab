@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="프랜차이즈 가맹점 수, 점포당 매출, 창업비용을 한 화면에서 비교하는 프차랩">
-<title>프차랩 | 프랜차이즈 비교</title>
+<meta name="description" content="프랜차이즈 가맹점 수, 점포당 매출, 창업비용을 한 화면에서 비교하는 산업서가">
+<title>산업서가 | 프랜차이즈 비교</title>
 <script>
 try {
   const saved = localStorage.getItem('frachalab-theme');
@@ -15,7 +15,7 @@ try {
 <script type="module" src="/app.js"></script>
 </head>
 <body>
-<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">프</span>프차랩</a><nav aria-label="주 메뉴"><a href="/search.html">통합검색</a><a href="#ranking" aria-current="page">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button><button type="button" id="open-compare">브랜드 비교 <span id="chosen-count">0</span></button></nav></div></header>
+<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">書</span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html">통합검색</a><a href="#ranking" aria-current="page">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button><button type="button" id="open-compare">브랜드 비교 <span id="chosen-count">0</span></button></nav></div></header>
 <main>
 <section class="hero"><div class="wrap hero-inner"><div><p class="kicker">프랜차이즈 컨설팅</p><h1>어떤 브랜드가<br>우리 가게의 기준이 될까?</h1><p class="lead">같은 업종의 가맹점 수, 점포당 연매출, 창업비용을 한눈에 비교해 봐.</p></div><dl class="snapshot"><div><dt>조회 가능한 브랜드</dt><dd id="brand-count">—</dd></div><div><dt>업종</dt><dd id="industry-count">—</dd></div><div><dt>자료 기준</dt><dd id="snapshot-year">—</dd></div></dl></div></section>
 <div class="wrap content">
@@ -30,5 +30,5 @@ try {
 <section class="sources" aria-labelledby="source-title"><h2 id="source-title">데이터 출처와 기준</h2><p>순위는 선택한 공시 기준 연도와 지표로 계산해. 공개값이 없는 브랜드는 순위에서 제외하고 목록에는 표시해. 가맹점 수는 직영점을 제외한 공시 값이고, 연매출은 점포당 평균이야. 실제 창업 총비용에는 공개 항목 외에 임차료나 별도 공사비 등이 추가될 수 있어.</p><p><a href="https://www.data.go.kr/data/15109828/openapi.do">브랜드 개요</a><a href="https://www.data.go.kr/data/15110241/openapi.do">가맹점 현황</a><a href="https://www.data.go.kr/data/15110265/openapi.do">창업비용 현황</a><a href="https://franchise.ftc.go.kr/">공정위 가맹사업거래</a></p></section>
 </div></main>
 <dialog id="panel" aria-labelledby="panel-title"><header class="dialog-head"><h2 id="panel-title"></h2><form method="dialog"><button aria-label="닫기">닫기</button></form></header><div id="panel-body"></div></dialog>
-<footer><div class="wrap">프차랩 · 프랜차이즈 브랜드 비교</div></footer>
+<footer><div class="wrap">산업서가 · 프랜차이즈 브랜드 비교</div></footer>
 </body></html>
