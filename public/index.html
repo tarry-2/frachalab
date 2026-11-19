@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프차랩 - 프랜차이즈 창업 분석 플랫폼</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        body {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+        }
+        .card {
+            background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #3B82F6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15);
+        }
+        .stat-card {
+            background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+            border: 1px solid #334155;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-blue {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #60A5FA;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .badge-green {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .badge-orange {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #FBBF24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .tab-active {
+            border-bottom: 2px solid #3B82F6;
+            color: #60A5FA;
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        .glow {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .border-glow {
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #3B82F6;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .input-dark {
+            background: #1E293B;
+            border: 1px solid #334155;
+            color: #F8FAFC;
+        }
+        .input-dark:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        .table-dark {
+            background: #1E293B;
+        }
+        .table-dark th {
+            background: #0F172A;
+            color: #94A3B8;
+        }
+        .table-dark td {
+            border-color: #334155;
+        }
+        .table-dark tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 헤더 -->
+    <header class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center glow">
+                        <span class="text-white text-xl font-bold">프</span>
+                    </div>
+                    <span class="text-2xl font-bold text-gradient">프차랩</span>
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-blue-400 font-medium transition">메인</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 font-medium transition">검색</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 font-medium transition">분석</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 font-medium transition">통계</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-blue-400 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                    </button>
+                    <button class="btn-primary text-white px-5 py-2 rounded-lg font-semibold">
+                        로그인
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 페이지 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 히어로 섹션 -->
+        <section class="card rounded-2xl p-8 mb-8 glow">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl font-bold mb-4 text-gradient">
+                    프랜차이즈 창업,<br>데이터로 분석하세요
+                </h1>
+                <p class="text-lg text-gray-400 mb-6">
+                    공정거래위원회 데이터를 기반으로 한눈에 보는 프랜차이즈 창업 정보
+                </p>
+                <div class="flex space-x-4">
+                    <button class="btn-primary text-white px-6 py-3 rounded-lg font-semibold">
+                        지금 시작하기
+                    </button>
+                    <button class="btn-secondary text-blue-400 px-6 py-3 rounded-lg font-semibold">
+                        더 알아보기
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 통계 카드 -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="stat-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">총 브랜드 수</span>
+                    <div class="w-10 h-10 bg-blue-900/50 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-3xl font-bold text-white">5,247</p>
+                <p class="text-sm text-green-400 mt-1">▲ 12% 증가</p>
+            </div>
+
+            <div class="stat-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">총 가맹점 수</span>
+                    <div class="w-10 h-10 bg-green-900/50 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-3xl font-bold text-white">128,456</p>
+                <p class="text-sm text-green-400 mt-1">▲ 8% 증가</p>
+            </div>
+
+            <div class="stat-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">평균 창업 비용</span>
+                    <div class="w-10 h-10 bg-orange-900/50 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-3xl font-bold text-white">1.2억</p>
+                <p class="text-sm text-gray-400 mt-1">전년 대비 동일</p>
+            </div>
+
+            <div class="stat-card rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-gray-400 text-sm">평균 월 매출</span>
+                    <div class="w-10 h-10 bg-purple-900/50 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                </div>
+                <p class="text-3xl font-bold text-white">6,800만</p>
+                <p class="text-sm text-green-400 mt-1">▲ 15% 증가</p>
+            </div>
+        </section>
+
+        <!-- 인기 프랜차이즈 TOP 10 -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-white">🏆 이번 달 인기 프랜차이즈 TOP 10</h2>
+                <a href="#" class="text-blue-400 hover:text-blue-300 font-medium transition">전체 보기 →</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 1위 -->
+                <div class="card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge badge-blue">1위</span>
+                        <span class="text-sm text-gray-400">외식업</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">○○○치킨</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">점포 수</span>
+                            <span class="font-semibold text-white">150개</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">평균 매출</span>
+                            <span class="font-semibold text-white">8억 원</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">창업 비용</span>
+                            <span class="font-semibold text-white">1억 원</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2위 -->
+                <div class="card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge badge-green">2위</span>
+                        <span class="text-sm text-gray-400">카페</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">△△△카페</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">점포 수</span>
+                            <span class="font-semibold text-white">120개</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">평균 매출</span>
+                            <span class="font-semibold text-white">6억 원</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">창업 비용</span>
+                            <span class="font-semibold text-white">8,000만 원</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3위 -->
+                <div class="card rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="badge badge-orange">3위</span>
+                        <span class="text-sm text-gray-400">편의점</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">□□□편의점</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">점포 수</span>
+                            <span class="font-semibold text-white">200개</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">평균 매출</span>
+                            <span class="font-semibold text-white">5억 원</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">창업 비용</span>
+                            <span class="font-semibold text-white">6,000만 원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 빠른 검색 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-white mb-6">🔍 빠른 검색</h2>
+            <div class="card rounded-xl p-6">
+                <div class="flex space-x-4">
+                    <input 
+                        type="text" 
+                        placeholder="브랜드명, 업종, 지역을 입력하세요" 
+                        class="flex-1 px-4 py-3 input-dark rounded-lg focus:outline-none"
+                    >
+                    <button class="btn-primary text-white px-6 py-3 rounded-lg font-semibold">
+                        검색
+                    </button>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-4">
+                    <span class="text-sm text-gray-400">인기 검색어:</span>
+                    <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition">치킨</a>
+                    <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition">카페</a>
+                    <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition">편의점</a>
+                    <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition">미용실</a>
+                    <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition">교육</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 업종별 분포 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-white mb-6">📊 업종별 분포</h2>
+            <div class="card rounded-xl p-6">
+                <canvas id="categoryChart" height="300"></canvas>
+            </div>
+        </section>
+
+        <!-- 최신 등록 브랜드 -->
+        <section class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-white">🆕 최신 등록 브랜드</h2>
+                <a href="#" class="text-blue-400 hover:text-blue-300 font-medium transition">전체 보기 →</a>
+            </div>
+            <div class="card rounded-xl overflow-hidden">
+                <table class="min-w-full table-dark">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">브랜드명</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">업종</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">점포 수</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">등록일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-white">커피몬스터 (CM COFFEE)</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="badge badge-green">카페</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">15개</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">2026-09-15</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-white">○○○피자</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="badge badge-blue">외식업</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">25개</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">2026-09-10</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-white">△△△분식</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="badge badge-orange">외식업</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">10개</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">2026-09-05</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="glass py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                            <span class="text-white text-lg font-bold">프</span>
+                        </div>
+                        <span class="text-xl font-bold text-gradient">프차랩</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        프랜차이즈 창업 분석 플랫폼
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">서비스</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">브랜드 검색</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">창업 비용 분석</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">매출 분석</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">통계</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">지원</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-blue-400 transition">이용약관</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">개인정보처리방침</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">문의하기</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4">데이터 출처</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>공정거래위원회</li>
+                        <li>공공데이터포털</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                © 2026 프차랩. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 업종별 분포 차트
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['음식', '카페', '편의점', '미용', '교육', '기타'],
+                datasets: [{
+                    data: [30, 20, 15, 10, 10, 15],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#10B981',
+                        '#F59E0B',
+                        '#8B5CF6',
+                        '#EC4899',
+                        '#6B7280'
+                    ],
+                    borderColor: '#0F172A',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#94A3B8'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "frachalab",
+  "version": "1.0.0",
+  "description": "프랜차이즈 창업 분석 플랫폼",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "start": "echo 'Start server'"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

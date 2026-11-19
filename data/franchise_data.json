@@ -1,0 +1,167 @@
+{
+  "last_updated": "2026-11-19",
+  "data_source": "공정거래위원회 정보공개서 (웹 검색 기반)",
+  "categories": {
+    "편의점": [
+      {
+        "rank": 1,
+        "brand": "씨유(CU)",
+        "stores": 18711,
+        "avg_revenue": "8억 원",
+        "startup_cost": "1억 원"
+      },
+      {
+        "rank": 2,
+        "brand": "GS25",
+        "stores": 18005,
+        "avg_revenue": "7.5억 원",
+        "startup_cost": "9,000만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "세븐일레븐",
+        "stores": 12152,
+        "avg_revenue": "6억 원",
+        "startup_cost": "8,000만 원"
+      }
+    ],
+    "치킨": [
+      {
+        "rank": 1,
+        "brand": "비비큐(BBQ)",
+        "stores": 2387,
+        "avg_revenue": "5억 원",
+        "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "비에이치씨(bhc)",
+        "stores": 2262,
+        "avg_revenue": "4.8억 원",
+        "startup_cost": "6,500만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "교촌치킨",
+        "stores": 1362,
+        "avg_revenue": "5.5억 원",
+        "startup_cost": "8,000만 원"
+      }
+    ],
+    "커피": [
+      {
+        "rank": 1,
+        "brand": "메가엠지씨커피",
+        "stores": 4016,
+        "avg_revenue": "3억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "컴포즈커피",
+        "stores": 2983,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "이디야커피",
+        "stores": 2581,
+        "avg_revenue": "3.2억 원",
+        "startup_cost": "5,500만 원"
+      }
+    ],
+    "분식": [
+      {
+        "rank": 1,
+        "brand": "이삭토스트",
+        "stores": 898,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "신전떡볶이",
+        "stores": 644,
+        "avg_revenue": "2억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "김가네",
+        "stores": 346,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "3,000만 원"
+      }
+    ],
+    "피자": [
+      {
+        "rank": 1,
+        "brand": "도미노피자",
+        "stores": 484,
+        "avg_revenue": "6억 원",
+        "startup_cost": "1억 원"
+      },
+      {
+        "rank": 2,
+        "brand": "피자마루",
+        "stores": 476,
+        "avg_revenue": "4억 원",
+        "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "반올림피자",
+        "stores": 367,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "6,000만 원"
+      }
+    ],
+    "일식": [
+      {
+        "rank": 1,
+        "brand": "백소정",
+        "stores": 194,
+        "avg_revenue": "4억 원",
+        "startup_cost": "8,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "미소야",
+        "stores": 181,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "시선",
+        "stores": 122,
+        "avg_revenue": "3억 원",
+        "startup_cost": "6,000만 원"
+      }
+    ],
+    "중식": [
+      {
+        "rank": 1,
+        "brand": "탕화쿵푸마라탕",
+        "stores": 540,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "홍콩반점0410",
+        "stores": 293,
+        "avg_revenue": "3억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "춘리마라탕",
+        "stores": 203,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "4,500만 원"
+      }
+    ]
+  }
+}
