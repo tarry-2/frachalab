@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="프랜차이즈, 다단계판매, 등록 변동 공시를 한 곳에서 검색">
+<title>공시 통합검색 | 프차랩</title>
+<script>
+try {
+  const saved = localStorage.getItem('frachalab-theme');
+  if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+} catch {}
+</script>
+<link rel="stylesheet" href="/style.css">
+<script type="module" src="/search.js"></script>
+</head>
+<body>
+<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">프</span>프차랩</a><nav aria-label="주 메뉴"><a href="/search.html" aria-current="page">통합검색</a><a href="/#ranking">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button></nav></div></header>
+<main>
+<section class="hero"><div class="wrap hero-inner"><div><h1>공시 통합검색</h1><p class="lead">브랜드, 가맹본부, 다단계판매업체의 실적과 등록 이력을 찾아봐.</p></div></div></section>
+<div class="wrap content">
+<form id="disclosure-search" class="filters disclosure-filters">
+<label class="search">회사명·브랜드·등록번호<input type="search" id="disclosure-query" name="q" placeholder="예: 힐리빙, 애터미, 메가커피, 서울 제1호"></label>
+<label>자료 구분<select id="disclosure-type" name="type"><option value="">전체 자료</option><option value="franchise">프랜차이즈</option><option value="mlm">다단계판매 실적</option><option value="change">등록 변동</option></select></label>
+<label>기준 연도<select id="disclosure-year" name="year"><option value="">전체 연도</option></select></label>
+<label id="disclosure-status-field">등록 변동 구분<select id="disclosure-state" name="state"><option value="">전체 구분</option><option>신규 등록</option><option>휴업</option><option>폐업</option><option>등록취소</option></select></label>
+<button type="submit" class="compare-btn">검색</button>
+</form>
+<p id="disclosure-status" class="data-status" role="status">공시 자료를 불러오는 중이야.</p>
+<div id="disclosure-results" class="disclosure-results" aria-label="검색 결과"></div>
+<div class="pager"><button id="disclosure-prev" type="button" disabled>이전</button><span id="disclosure-page"></span><button id="disclosure-next" type="button" disabled>다음</button></div>
+</div>
+</main>
+<footer><div class="wrap">프차랩 · 공시 통합검색</div></footer>
+</body>
+</html>

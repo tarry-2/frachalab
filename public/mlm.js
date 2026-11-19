@@ -133,10 +133,16 @@ try {
     option.value = year;
     element('year').append(option);
   }
+  const params = new URLSearchParams(location.search);
+  const year = params.get('year');
+  if (year && Object.hasOwn(catalog.years,year)) element('year').value = year;
+  if (params.has('q')) element('query').value = params.get('q');
   element('status').textContent = '공정거래위원회 다단계판매사업자 정보공개 · 마지막 확인 ' + catalog.checked;
   element('query').addEventListener('input',search);
   element('year').addEventListener('change',changeYear);
   changeYear();
+  const match = matches.find(row => row.registration === params.get('registration'));
+  if (match) openCompany(match);
 } catch (error) {
   element('status').textContent = '공시 자료를 읽지 못했어. 잠시 뒤 다시 열어 봐.';
   console.error(error);

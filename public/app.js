@@ -197,6 +197,10 @@ try {
   catalog = await reply.json();
   const years = Object.keys(catalog.years).sort().reverse();
   for (const year of years) addOption(element('year'),year,year);
+  const params = new URLSearchParams(location.search);
+  const year = params.get('year');
+  if (year && years.includes(year)) element('year').value = year;
+  if (params.has('q')) element('query').value = params.get('q');
   element('year-control').hidden = years.length < 2;
   const status = element('data-status');
   if (catalog.preview) {
@@ -207,6 +211,8 @@ try {
     status.textContent = '공정거래위원회 정보공개서 · 마지막 동기화 ' + date + ' · 공시 기준 연도와 동기화 날짜는 달라.';
   }
   changeYear();
+  const match = shown.find(({row}) => row.id === params.get('id'));
+  if (match) detail(match.row,match.rank);
 } catch (error) {
   element('data-status').textContent = '데이터를 읽지 못했어. 잠시 뒤 다시 열어 봐.';
   element('prev').disabled = element('next').disabled = true;

@@ -54,6 +54,12 @@ try {
   const all = cell('option','전체 연도');
   all.value = '';
   get('year').append(all);
+  const params = new URLSearchParams(location.search);
+  const year = params.get('changeYear');
+  const state = params.get('changeState');
+  if (year && [...get('year').options].some(option => option.value === year)) get('year').value = year;
+  if (state && categories.includes(state)) get('category').value = state;
+  if (params.has('changeQuery')) get('query').value = params.get('changeQuery');
   get('query').addEventListener('input',render);
   get('year').addEventListener('change',render);
   get('category').addEventListener('change',render);
