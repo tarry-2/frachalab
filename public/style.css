@@ -156,3 +156,10 @@ footer{border-top:1px solid #374359}
   .page-research .hero-inner { padding: 0; display: block; }
   .page-research .table-frame { overflow: visible; }
 }
+
+.mast-inner nav .site-action { background: #3f537d; color: #f8faff; border-color: #8399c7; }
+.mast-inner nav .site-action:hover { background: #4c6495; }
+#site-share-dialog { width: min(500px, calc(100% - 26px)); background: var(--surface); }
+.site-share-body { padding: 18px 20px; }
+.site-share-body input { margin-bottom: 12px; }
+.site-share-body [role=status]:empty { display: none; }

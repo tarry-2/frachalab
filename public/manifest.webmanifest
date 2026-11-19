@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "산업서가",
+  "short_name": "산업서가",
+  "description": "기업과 시장의 공시를 모아 보는 자료실",
+  "lang": "ko",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#3f537d",
+  "icons": [
+    { "src": "/icons/app-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/app-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
