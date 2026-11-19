@@ -37,6 +37,9 @@ const value = (key, val) => {
   if (typeof val === 'string') return val;
   return number.format(val) + (counts.has(key) ? '개' : '원');
 };
+function reportedValue(row, key) {
+  return row.conflicts?.includes(key) ? '확인 필요' : value(key, row[key]);
+}
 function logo(row) {
   const fallback = make('span', [...row.name].slice(0, 2).join(''), 'logo');
   fallback.setAttribute('aria-hidden', 'true');
@@ -90,7 +93,7 @@ function detail(row, rank) {
   const facts = make('dl', undefined, 'detail-grid');
   for (const [key, label] of details) {
     const item = make('div');
-    item.append(make('dt', label), make('dd', value(key, row[key])));
+    item.append(make('dt', label), make('dd', reportedValue(row, key)));
     facts.append(item);
   }
   const actions = make('div', undefined, 'detail-actions');
@@ -99,7 +102,7 @@ function detail(row, rank) {
   actions.append(compareButton(row), source);
   const note = catalog.preview
     ? '기존 자료에 있던 브랜드 목록이야. 공시 원본을 확인하기 전에는 수치와 순위를 표시하지 않아.'
-    : (rank ? metrics[element('metric').value] + ' 기준 ' + number.format(rank) + '위 · ' : '') + '미공개 항목은 정보공개서에서 확인해.';
+    : (rank ? metrics[element('metric').value] + ' 기준 ' + number.format(rank) + '위 · ' : '') + '미공개 또는 확인 필요 항목은 정보공개서에서 확인해.';
   body.append(heading, facts, make('p', note, 'detail-note'), actions);
   dialog('브랜드 상세', body);
   updateCompare();
@@ -118,7 +121,7 @@ function compare() {
   for (const brand of brands) heading.append(make('th',brand.name));
   thead.append(heading);
   const tbody = make('tbody');
-  for (const [label, getter] of [['업종', b => b.category], ['가맹본부', b => b.company || '미공개'], ...details.map(([key,label]) => [label, b => value(key,b[key])])]) {
+  for (const [label, getter] of [['업종', b => b.category], ['가맹본부', b => b.company || '미공개'], ...details.map(([key,label]) => [label, b => reportedValue(b,key)])]) {
     const row = make('tr');
     const caption = make('th',label);
     caption.scope = 'row';
@@ -165,7 +168,7 @@ function renderPage() {
     brandCell.append(brand);
     const action = make('td');
     action.append(compareButton(row));
-    tr.append(make('td',rank == null ? '—' : number.format(rank)),brandCell,make('td',row.category),...Object.keys(metrics).map(key => make('td',value(key,row[key]),'metric')),action);
+    tr.append(make('td',rank == null ? '—' : number.format(rank)),brandCell,make('td',row.category),...Object.keys(metrics).map(key => make('td',reportedValue(row,key),'metric')),action);
     fragment.append(tr);
   }
   if (!shown.length) {

@@ -18,7 +18,7 @@ const knownCount = data => Object.values(data.years || {}).reduce((sum, rows) =>
 
 async function fetchPage(source, year, page, key) {
   const request = new URL('https://apis.data.go.kr/1130000/' + source);
-  request.search = new URLSearchParams({ serviceKey:key, yr:String(year), pageNo:String(page), numOfRows:'100', resultType:'json' });
+  request.search = new URLSearchParams({ serviceKey:key, yr:String(year), pageNo:String(page), numOfRows:'500', resultType:'json' });
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const response = await fetch(request, { signal:AbortSignal.timeout(25000), redirect:'error' });
@@ -83,13 +83,16 @@ function merge(brands, stores, costs, units, images) {
     return raw === null || !Number.isSafeInteger(raw * unit) ? null : raw * unit;
   };
   for (const [group, records] of Object.entries({brands,stores,costs})) {
-    const seen = new Map();
+    const groups = new Map();
     for (const raw of records) {
       const identity = keyOf(raw);
-      if (seen.has(identity) && seen.get(identity) !== JSON.stringify(raw)) {
-        throw new Error(group + ' · 같은 브랜드와 본사에 서로 다른 공시 행이 있습니다.');
-      }
-      seen.set(identity, JSON.stringify(raw));
+      const list = groups.get(identity) ?? [];
+      list.push(raw);
+      groups.set(identity, list);
+    }
+    let conflicts = 0;
+    for (const [identity, duplicates] of groups) {
+      const [raw] = duplicates;
       const name = clean(raw.brandNm);
       const company = clean(raw.corpNm);
       const row = data.get(identity) ?? {
@@ -97,19 +100,46 @@ function merge(brands, stores, costs, units, images) {
         name, company, category:clean(raw.indutyMlsfcNm) || clean(raw.indutyLclasNm) || '미분류',
         sector:clean(raw.indutyLclasNm),
       };
-      if (group === 'brands') Object.assign(row,{stores:integer(raw.frcsCnt),started:clean(raw.jngBizStrtDate) || null});
-      if (group === 'stores') Object.assign(row,{
-        stores:integer(raw.frcsCnt) ?? row.stores ?? null, revenue:money(raw.avrgSlsAmt,units.revenue),
-        opened:integer(raw.newFrcsRgsCnt), ended:integer(raw.ctrtEndCnt), cancelled:integer(raw.ctrtCncltnCnt), transferred:integer(raw.nmChgCnt),
-      });
-      if (group === 'costs') Object.assign(row,{
-        cost:money(raw.smtnAmt,units.cost), fee:money(raw.jngBzmnJngAmt,units.cost), education:money(raw.jngBzmnEduAmt,units.cost),
-        deposit:money(raw.jngBzmnAssrncAmt,units.cost), other:money(raw.jngBzmnEtcAmt,units.cost),
-      });
+      const marked = new Set(row.conflicts);
+      const reconcile = (key, source, parse) => {
+        const values = new Set(duplicates.map(record => parse(record[source])).filter(value => value != null));
+        if (values.size > 1) {
+          marked.add(key);
+          return null;
+        }
+        return values.values().next().value ?? null;
+      };
+      if (group === 'brands') {
+        row.stores = reconcile('stores','frcsCnt',integer);
+        row.started = reconcile('started','jngBizStrtDate',value => clean(value) || null);
+      }
+      if (group === 'stores') {
+        const reportedStores = reconcile('stores','frcsCnt',integer);
+        if (!marked.has('stores') && reportedStores != null && row.stores != null && reportedStores !== row.stores) marked.add('stores');
+        row.stores = marked.has('stores') ? null : reportedStores ?? row.stores ?? null;
+        row.revenue = reconcile('revenue','avrgSlsAmt',value => money(value,units.revenue));
+        row.opened = reconcile('opened','newFrcsRgsCnt',integer);
+        row.ended = reconcile('ended','ctrtEndCnt',integer);
+        row.cancelled = reconcile('cancelled','ctrtCncltnCnt',integer);
+        row.transferred = reconcile('transferred','nmChgCnt',integer);
+      }
+      if (group === 'costs') {
+        const amount = value => money(value,units.cost);
+        row.cost = reconcile('cost','smtnAmt',amount);
+        row.fee = reconcile('fee','jngBzmnJngAmt',amount);
+        row.education = reconcile('education','jngBzmnEduAmt',amount);
+        row.deposit = reconcile('deposit','jngBzmnAssrncAmt',amount);
+        row.other = reconcile('other','jngBzmnEtcAmt',amount);
+      }
+      if (marked.size !== (row.conflicts?.length ?? 0)) {
+        row.conflicts = [...marked];
+        conflicts++;
+      }
       const image = images.find(item => item.name === name && item.company === company);
       if (image) row.image = image.image;
       data.set(identity,row);
     }
+    console.log(group + ' · 식별 항목 ' + groups.size + '개 · 수치 충돌 항목이 있는 브랜드 ' + conflicts + '개');
   }
   return [...data.values()].sort((a,b) => a.id.localeCompare(b.id));
 }
@@ -130,9 +160,9 @@ async function main() {
   if (years.length > 8 || years.some(year => year === null || year < 2017 || year > current)) throw new Error('FTC_YEARS를 확인하세요.');
   const result = {};
   for (const year of years) {
-    const brands = await fetchAll('brands',year,key);
-    const stores = await fetchAll('stores',year,key);
-    const costs = await fetchAll('costs',year,key);
+    const [brands,stores,costs] = await Promise.all(
+      ['brands','stores','costs'].map(name => fetchAll(name,year,key)),
+    );
     if (!brands.length && !stores.length && !costs.length) continue;
     const merged = merge(brands,stores,costs,units,images);
     const old = previous.preview ? [] : previous.years[year] || [];
