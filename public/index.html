@@ -302,6 +302,57 @@
             color: #D97706;
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
+        /* 상세 페이지 이미지 위 파스텔 카드 텍스트 가독성 강화 */
+        .detail-header h1 {
+            color: #FFFFFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .detail-header p {
+            color: #E2E8F0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        body.light .detail-header h1 {
+            color: #FFFFFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        body.light .detail-header p {
+            color: #E2E8F0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        /* 파스텔 카드 스타일 */
+        .pastel-card {
+            background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .pastel-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #2563EB;
+        }
+        .pastel-card p {
+            color: #475569;
+            line-height: 1.6;
+        }
+        .pastel-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .pastel-stat:last-child {
+            border-bottom: none;
+        }
+        .pastel-stat-label {
+            color: #64748B;
+        }
+        .pastel-stat-value {
+            color: #0F172A;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -752,85 +803,85 @@
         </div>
         
         <div class="detail-header">
-            <h1 class="text-4xl font-bold text-white mb-2" id="detailTitle">메가엠지씨커피</h1>
-            <p class="text-lg text-gray-300" id="detailCategory">커피 프랜차이즈</p>
+            <h1 class="text-4xl font-bold mb-2" id="detailTitle">메가엠지씨커피</h1>
+            <p class="text-lg" id="detailCategory">커피 프랜차이즈</p>
         </div>
         
         <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=400&fit=crop" alt="메가엠지씨커피" class="detail-image" id="detailImage">
         
-        <div class="detail-section">
+        <div class="pastel-card">
             <h3>📊 기본 정보</h3>
-            <div class="detail-stat">
-                <span class="detail-stat-label">점포 수</span>
-                <span class="detail-stat-value" id="detailStores">4,016개</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">점포 수</span>
+                <span class="pastel-stat-value" id="detailStores">4,016개</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">평균 매출</span>
-                <span class="detail-stat-value" id="detailRevenue">3억 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">평균 매출</span>
+                <span class="pastel-stat-value" id="detailRevenue">3억 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">창업 비용</span>
-                <span class="detail-stat-value" id="detailCost">5,000만 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">창업 비용</span>
+                <span class="pastel-stat-value" id="detailCost">5,000만 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">업종</span>
-                <span class="detail-stat-value" id="detailCategoryText">커피</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">업종</span>
+                <span class="pastel-stat-value" id="detailCategoryText">커피</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">등록일</span>
-                <span class="detail-stat-value" id="detailDate">2026-11-19</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">등록일</span>
+                <span class="pastel-stat-value" id="detailDate">2026-11-19</span>
             </div>
         </div>
         
-        <div class="detail-section">
+        <div class="pastel-card">
             <h3>💰 창업 비용 상세</h3>
-            <div class="detail-stat">
-                <span class="detail-stat-label">가맹비</span>
-                <span class="detail-stat-value">1,000만 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">가맹비</span>
+                <span class="pastel-stat-value">1,000만 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">교육비</span>
-                <span class="detail-stat-value">500만 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">교육비</span>
+                <span class="pastel-stat-value">500만 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">인테리어</span>
-                <span class="detail-stat-value">2,500만 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">인테리어</span>
+                <span class="pastel-stat-value">2,500만 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">장비</span>
-                <span class="detail-stat-value">1,000만 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">장비</span>
+                <span class="pastel-stat-value">1,000만 원</span>
             </div>
         </div>
         
-        <div class="detail-section">
+        <div class="pastel-card">
             <h3>📈 매출 분석</h3>
-            <div class="detail-stat">
-                <span class="detail-stat-label">월 평균 매출</span>
-                <span class="detail-stat-value">2,500만 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">월 평균 매출</span>
+                <span class="pastel-stat-value">2,500만 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">연 평균 매출</span>
-                <span class="detail-stat-value">3억 원</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">연 평균 매출</span>
+                <span class="pastel-stat-value">3억 원</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">성장률</span>
-                <span class="detail-stat-value">▲ 15%</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">성장률</span>
+                <span class="pastel-stat-value">▲ 15%</span>
             </div>
         </div>
         
-        <div class="detail-section">
+        <div class="pastel-card">
             <h3>🏪 점포 현황</h3>
-            <div class="detail-stat">
-                <span class="detail-stat-label">총 점포 수</span>
-                <span class="detail-stat-value">4,016개</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">총 점포 수</span>
+                <span class="pastel-stat-value">4,016개</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">신규 오픈</span>
-                <span class="detail-stat-value">120개</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">신규 오픈</span>
+                <span class="pastel-stat-value">120개</span>
             </div>
-            <div class="detail-stat">
-                <span class="detail-stat-label">폐점</span>
-                <span class="detail-stat-value">30개</span>
+            <div class="pastel-stat">
+                <span class="pastel-stat-label">폐점</span>
+                <span class="pastel-stat-value">30개</span>
             </div>
         </div>
     </main>
