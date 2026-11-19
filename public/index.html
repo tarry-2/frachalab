@@ -18,9 +18,9 @@
             background-color: #0F172A;
             color: #F8FAFC;
         }
-        /* 라이트 모드 */
+        /* 라이트 모드 - 텍스트 가독성 강화 */
         body.light {
-            background-color: #F8FAFC;
+            background-color: #FFFFFF;
             color: #0F172A;
         }
         .gradient-bg {
@@ -32,7 +32,7 @@
             transition: all 0.3s ease;
         }
         body.light .card {
-            background: linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%);
+            background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
             border: 1px solid #E2E8F0;
         }
         .card:hover {
@@ -44,7 +44,7 @@
             border: 1px solid #334155;
         }
         body.light .stat-card {
-            background: linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%);
+            background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
             border: 1px solid #E2E8F0;
         }
         .badge {
@@ -79,8 +79,8 @@
             border: 1px solid rgba(51, 65, 85, 0.5);
         }
         body.light .glass {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(226, 232, 240, 0.5);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(226, 232, 240, 0.8);
         }
         .glow {
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
@@ -218,7 +218,7 @@
             margin-bottom: 24px;
         }
         body.light .detail-section {
-            background: linear-gradient(145deg, #FFFFFF 0%, #F1F5F9 100%);
+            background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
             border: 1px solid #E2E8F0;
         }
         .detail-section h3 {
@@ -264,6 +264,43 @@
         }
         .back-button:hover {
             color: #3B82F6;
+        }
+        /* 라이트 모드 텍스트 가독성 강화 */
+        body.light .text-gray-400 {
+            color: #64748B;
+        }
+        body.light .text-gray-300 {
+            color: #475569;
+        }
+        body.light .text-white {
+            color: #0F172A;
+        }
+        body.light .text-blue-400 {
+            color: #2563EB;
+        }
+        body.light .text-green-400 {
+            color: #059669;
+        }
+        body.light .text-orange-400 {
+            color: #D97706;
+        }
+        body.light .text-purple-400 {
+            color: #7C3AED;
+        }
+        body.light .badge-blue {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #2563EB;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        body.light .badge-green {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        body.light .badge-orange {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #D97706;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
     </style>
 </head>
