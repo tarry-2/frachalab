@@ -11,20 +11,25 @@ try {
   if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
 } catch {}
 </script>
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v=editorial">
 <script type="module" src="/app.js"></script>
 </head>
-<body>
-<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">書</span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html">통합검색</a><a href="#ranking" aria-current="page">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button><button type="button" id="open-compare">브랜드 비교 <span id="chosen-count">0</span></button></nav></div></header>
+<body class="page-franchise">
+<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html">통합검색</a><a href="#ranking" aria-current="page">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button><button type="button" id="open-compare">브랜드 비교 <span id="chosen-count">0</span></button></nav></div></header>
 <main>
-<section class="hero"><div class="wrap hero-inner"><div><p class="kicker">프랜차이즈 컨설팅</p><h1>어떤 브랜드가<br>우리 가게의 기준이 될까?</h1><p class="lead">같은 업종의 가맹점 수, 점포당 연매출, 창업비용을 한눈에 비교해 봐.</p></div><dl class="snapshot"><div><dt>조회 가능한 브랜드</dt><dd id="brand-count">—</dd></div><div><dt>업종</dt><dd id="industry-count">—</dd></div><div><dt>자료 기준</dt><dd id="snapshot-year">—</dd></div></dl></div></section>
+<section class="hero"><div class="wrap hero-inner"><div class="hero-copy"><p class="kicker">프랜차이즈</p><h1>가맹시장을<br>숫자로 읽다.</h1><p class="lead">같은 업종의 가맹점 수, 점포당 연매출, 창업비용을 한눈에 비교해 봐.</p><dl class="snapshot"><div><dt>조회 가능한 브랜드</dt><dd id="brand-count">—</dd></div><div><dt>업종</dt><dd id="industry-count">—</dd></div><div><dt>자료 기준</dt><dd id="snapshot-year">—</dd></div></dl></div><figure class="hero-art"><img src="/images/franchise-store.webp" alt="저녁의 서울 상점가를 배경으로 한 프랜차이즈 매장 콘셉트 이미지" width="1200" height="800" fetchpriority="high"></figure></div></section>
 <div class="wrap content">
+<form class="catalog-search" action="/search.html" method="get">
+<img src="/images/library-magpie.webp" alt="" width="120" height="80" loading="lazy">
+<label for="catalog-query">공시 통합검색<input id="catalog-query" name="q" type="search" placeholder="회사명·브랜드·등록번호" required></label>
+<button type="submit" class="compare-btn">검색</button>
+</form>
 <p id="data-status" class="data-status" role="status">데이터를 불러오는 중이야.</p>
 <section id="ranking" aria-labelledby="ranking-title">
 <div class="section-head"><div><h2 id="ranking-title">브랜드 순위</h2><p>전체 시장과 업종별 경쟁 구도를 살펴봐.</p></div><label id="year-control" hidden>기준 연도<select id="year"></select></label></div>
 <div class="filters"><label class="search">브랜드·본사 검색<input id="query" type="search" placeholder="예: 커피, 치킨, 브랜드명"></label><label>업종<select id="industry"><option value="">전체 업종</option></select></label><label>순위 기준<select id="metric"><option value="stores">가맹점 수 많은 순</option><option value="revenue">점포당 연매출 높은 순</option><option value="cost">창업비용 낮은 순</option></select></label></div>
 <div class="table-meta"><p id="result-count" aria-live="polite"></p><span>비교에 최대 4개 브랜드 추가</span></div>
-<div class="table-frame"><table><thead><tr><th scope="col">순위</th><th scope="col">브랜드</th><th scope="col">업종</th><th scope="col">가맹점 수</th><th scope="col">점포당 연매출</th><th scope="col">공개 창업비용</th><th scope="col">비교</th></tr></thead><tbody id="results"></tbody></table></div>
+<div class="table-frame"><table><thead><tr><th scope="col">순위</th><th scope="col">브랜드</th><th scope="col">업종</th><th scope="col" class="metric">가맹점 수</th><th scope="col" class="metric">점포당 연매출</th><th scope="col" class="metric">공개 창업비용</th><th scope="col">비교</th></tr></thead><tbody id="results"></tbody></table></div>
 <div class="pager"><button id="prev" type="button">이전</button><span id="page-number"></span><button id="next" type="button">다음</button></div>
 </section>
 <section class="sources" aria-labelledby="source-title"><h2 id="source-title">데이터 출처와 기준</h2><p>순위는 선택한 공시 기준 연도와 지표로 계산해. 공개값이 없는 브랜드는 순위에서 제외하고 목록에는 표시해. 가맹점 수는 직영점을 제외한 공시 값이고, 연매출은 점포당 평균이야. 실제 창업 총비용에는 공개 항목 외에 임차료나 별도 공사비 등이 추가될 수 있어.</p><p><a href="https://www.data.go.kr/data/15109828/openapi.do">브랜드 개요</a><a href="https://www.data.go.kr/data/15110241/openapi.do">가맹점 현황</a><a href="https://www.data.go.kr/data/15110265/openapi.do">창업비용 현황</a><a href="https://franchise.ftc.go.kr/">공정위 가맹사업거래</a></p></section>

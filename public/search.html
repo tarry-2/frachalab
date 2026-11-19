@@ -11,13 +11,13 @@ try {
   if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
 } catch {}
 </script>
-<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/style.css?v=editorial">
 <script type="module" src="/search.js"></script>
 </head>
-<body>
-<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true">書</span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html" aria-current="page">통합검색</a><a href="/#ranking">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button></nav></div></header>
+<body class="page-search">
+<header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html" aria-current="page">통합검색</a><a href="/#ranking">브랜드 순위</a><a href="/mlm.html">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button></nav></div></header>
 <main>
-<section class="hero"><div class="wrap hero-inner"><div><h1>공시 통합검색</h1><p class="lead">브랜드, 가맹본부, 다단계판매업체의 실적과 등록 이력을 찾아봐.</p></div></div></section>
+<section class="hero"><div class="wrap hero-inner"><div class="hero-copy"><p class="kicker">산업서가</p><h1>공시 통합검색</h1><p class="lead">브랜드, 가맹본부, 다단계판매업체의 실적과 등록 이력을 찾아봐.</p></div><figure class="hero-art"><img src="/images/library-magpie.webp" alt="둥근 안경을 쓰고 공시 책을 든 산업서가의 까치 캐릭터" width="1200" height="800" fetchpriority="high"></figure></div></section>
 <div class="wrap content">
 <form id="disclosure-search" class="filters disclosure-filters">
 <label class="search">회사명·브랜드·등록번호<input type="search" id="disclosure-query" name="q" placeholder="예: 힐리빙, 애터미, 메가커피, 서울 제1호"></label>
