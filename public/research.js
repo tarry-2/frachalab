@@ -300,13 +300,18 @@ async function finance() {
   filters.addEventListener('input', render);
   render();
 }
-function insurance() {
+async function insurance() {
   const categories = [
-    ['생명보험 원수사', '회사별 수입보험료와 경영공시', '생명보험협회 회사별 통계', 'https://www.klia.or.kr/consumer/stats/statHomSta/monthStats.do'],
     ['손해보험 원수사', '원수보험료와 회사별 경영공시', '손해보험협회 공시실', 'https://kpub.knia.or.kr/'],
     ['법인보험대리점(GA)', '등록 현황, 소속 설계사 수, 계약 유지율 등 공시 항목', '이클린보험서비스 GA 공시', 'https://eclean.knia.or.kr/eclean/main010m'],
   ];
-  root.append(node('p', '보험사 순위와 GA별 수치는 기관의 공식 공시에서 확인할 수 있어.', 'data-status'));
+  const life = await get('insurance-life');
+  const ranking = [...life.companies].sort((a, b) => b.premiums - a.premiums);
+  root.append(node('h2', '생명보험 원수사 순위'),
+    node('p', life.year + '년 생명보험협회 통계연보 · 수입보험료 합계 기준 · 단위 백만원', 'data-status'),
+    table(['순위', '보험사', '수입보험료 합계', '일반계정', '특별계정'],
+      ranking.map((row, i) => [i + 1, row.name, amount(row.premiums), amount(row.general), amount(row.separate)])),
+    source('생명보험협회 통계연보', life.source), source('수입보험료 원본 엑셀', life.file));
   for (const [heading, description, label, url] of categories) {
     const section = node('section');
     section.append(node('h2', heading), node('p', description), source(label, url));

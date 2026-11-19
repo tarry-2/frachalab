@@ -1,0 +1,139 @@
+{
+  "year": 2025,
+  "source": "https://www.klia.or.kr/consumer/stats/yearBook/list.do",
+  "file": "https://www.klia.or.kr/FileDown.do?fileNo=21412&seq=1",
+  "companies": [
+    {
+      "name": "한화",
+      "premiums": 19783732,
+      "general": 15160704,
+      "separate": 4623027
+    },
+    {
+      "name": "ABL",
+      "premiums": 2643162,
+      "general": 2330371,
+      "separate": 312791
+    },
+    {
+      "name": "삼성",
+      "premiums": 26734189,
+      "general": 18226655,
+      "separate": 8507533
+    },
+    {
+      "name": "흥국",
+      "premiums": 4433546,
+      "general": 1795108,
+      "separate": 2638438
+    },
+    {
+      "name": "교보",
+      "premiums": 17979937,
+      "general": 11079411,
+      "separate": 6900527
+    },
+    {
+      "name": "iM라이프",
+      "premiums": 1089622,
+      "general": 688439,
+      "separate": 401183
+    },
+    {
+      "name": "미래에셋",
+      "premiums": 4971637,
+      "general": 1476789,
+      "separate": 3494848
+    },
+    {
+      "name": "KDB",
+      "premiums": 2017830,
+      "general": 1644945,
+      "separate": 372885
+    },
+    {
+      "name": "DB",
+      "premiums": 2629502,
+      "general": 1977459,
+      "separate": 652043
+    },
+    {
+      "name": "동양",
+      "premiums": 4814448,
+      "general": 3908666,
+      "separate": 905782
+    },
+    {
+      "name": "메트라이프",
+      "premiums": 4591469,
+      "general": 1175725,
+      "separate": 3415744
+    },
+    {
+      "name": "KB라이프",
+      "premiums": 5733191,
+      "general": 4053511,
+      "separate": 1679679
+    },
+    {
+      "name": "신한라이프",
+      "premiums": 8890901,
+      "general": 7114612,
+      "separate": 1776289
+    },
+    {
+      "name": "처브라이프",
+      "premiums": 212674,
+      "general": 179451,
+      "separate": 33223
+    },
+    {
+      "name": "하나",
+      "premiums": 2038899,
+      "general": 1010354,
+      "separate": 1028545
+    },
+    {
+      "name": "BNP파리바카디프",
+      "premiums": 536747,
+      "general": 17810,
+      "separate": 518937
+    },
+    {
+      "name": "푸본현대",
+      "premiums": 3465121,
+      "general": 999873,
+      "separate": 2465248
+    },
+    {
+      "name": "라이나",
+      "premiums": 3370370,
+      "general": 3125538,
+      "separate": 244832
+    },
+    {
+      "name": "AIA",
+      "premiums": 3202827,
+      "general": 1670202,
+      "separate": 1532625
+    },
+    {
+      "name": "IBK",
+      "premiums": 2331064,
+      "general": 891435,
+      "separate": 1439629
+    },
+    {
+      "name": "NH농협",
+      "premiums": 5944071,
+      "general": 5500880,
+      "separate": 443191
+    },
+    {
+      "name": "교보라이프플래닛",
+      "premiums": 91187,
+      "general": 61834,
+      "separate": 29353
+    }
+  ]
+}
