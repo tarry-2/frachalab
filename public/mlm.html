@@ -24,7 +24,7 @@ try {
 <nav class="mlm-sections" aria-label="다단계판매 자료"><a href="#mlm-ranking">매출 순위</a><a href="#mlm-changes">연도별 등록 변동</a></nav>
 <section aria-labelledby="mlm-changes" class="mlm-changes">
 <div class="section-head"><div><h2 id="mlm-changes">연도별 등록 변동</h2><p>공정위 분기 공지에서 확인된 신규 등록, 휴업, 폐업, 등록취소 이력이야.</p></div></div>
-<div class="filters"><label>변동 연도<select id="changes-year"></select></label><label>구분<select id="changes-category"><option value="">전체 구분</option><option>신규 등록</option><option>휴업</option><option>폐업</option><option>등록취소</option></select></label></div>
+<div class="filters"><label class="search">회사명·등록번호 검색<input type="search" id="changes-query" placeholder="예: 힐리빙"></label><label>변동 연도<select id="changes-year"></select></label><label>구분<select id="changes-category"><option value="">전체 구분</option><option>신규 등록</option><option>휴업</option><option>폐업</option><option>등록취소</option></select></label></div>
 <p id="changes-status" class="table-meta" role="status">변동 자료를 불러오는 중이야.</p>
 <div class="table-frame" tabindex="0" aria-label="연도별 다단계판매업 등록 변동"><table><thead><tr><th scope="col">변동일</th><th scope="col">구분</th><th scope="col">회사명</th><th scope="col">지역·등록번호</th><th scope="col">공정위 공지</th></tr></thead><tbody id="changes-results"></tbody></table></div>
 <p class="detail-note">공개된 분기만 집계해. 공제계약 해지는 다단계판매업 등록취소와 별개야.</p>

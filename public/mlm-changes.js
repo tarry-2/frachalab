@@ -6,18 +6,21 @@ const cell = (tag, text) => {
 };
 const categories = ['신규 등록','휴업','폐업','등록취소'];
 let catalog;
+const lookup = value => value.normalize('NFKC').toLowerCase().replace(/\s+/g,'');
 
 function render() {
   const year = get('year').value;
   const filter = get('category').value;
-  const quarters = Object.entries(catalog.quarters).filter(([key]) => key.startsWith(year + '-'));
+  const query = lookup(get('query').value);
+  const quarters = Object.entries(catalog.quarters).filter(([key]) => !year || key.startsWith(year + '-'));
   const entries = quarters.flatMap(([key,item]) => item.events.map(event => ({...event,quarter:key.split('-')[1],source:item.source})));
-  const visible = entries.filter(event => !filter || event.category === filter)
+  const matching = entries.filter(event => !query || [event.name,event.registration].some(value => lookup(value).includes(query)));
+  const visible = matching.filter(event => !filter || event.category === filter)
     .sort((a,b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name,'ko'));
   const fragment = document.createDocumentFragment();
   for (const event of visible) {
     const tr = document.createElement('tr');
-    const link = cell('a',event.quarter + '분기 원문');
+    const link = cell('a',event.date.slice(0,4) + '년 ' + event.quarter + '분기 원문');
     link.href = event.source;
     const source = document.createElement('td');
     source.append(link);
@@ -33,9 +36,10 @@ function render() {
     fragment.append(row);
   }
   get('results').replaceChildren(fragment);
-  const counts = categories.map(category => category + ' ' + entries.filter(event => event.category === category).length + '건');
+  const counts = categories.map(category => category + ' ' + matching.filter(event => event.category === category).length + '건');
   const coverage = quarters.map(([key]) => Number(key.split('-')[1])).sort().map(quarter => quarter + '분기').join(', ');
-  get('status').textContent = [year + '년 확인 범위 ' + coverage,...counts,'마지막 확인 ' + catalog.checked].join(' · ');
+  const scope = year ? year + '년 확인 범위 ' + coverage : '전체 ' + quarters.length + '개 확인 분기';
+  get('status').textContent = [scope,...counts,'마지막 확인 ' + catalog.checked].join(' · ');
 }
 
 try {
@@ -47,6 +51,10 @@ try {
     option.value = year;
     get('year').append(option);
   }
+  const all = cell('option','전체 연도');
+  all.value = '';
+  get('year').append(all);
+  get('query').addEventListener('input',render);
   get('year').addEventListener('change',render);
   get('category').addEventListener('change',render);
   render();
