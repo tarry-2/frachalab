@@ -97,24 +97,24 @@
     "피자": [
       {
         "rank": 1,
+        "brand": "피자스쿨",
+        "stores": 327,
+        "avg_revenue": "1.7억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 2,
         "brand": "도미노피자",
         "stores": 484,
         "avg_revenue": "6억 원",
         "startup_cost": "1억 원"
       },
       {
-        "rank": 2,
+        "rank": 3,
         "brand": "피자마루",
         "stores": 476,
         "avg_revenue": "4억 원",
         "startup_cost": "7,000만 원"
-      },
-      {
-        "rank": 3,
-        "brand": "반올림피자",
-        "stores": 367,
-        "avg_revenue": "3.5억 원",
-        "startup_cost": "6,000만 원"
       }
     ],
     "일식": [
@@ -134,9 +134,9 @@
       },
       {
         "rank": 3,
-        "brand": "시선",
-        "stores": 122,
-        "avg_revenue": "3억 원",
+        "brand": "쿠시노아",
+        "stores": 20,
+        "avg_revenue": "3.3억 원",
         "startup_cost": "6,000만 원"
       }
     ],
@@ -161,6 +161,29 @@
         "stores": 203,
         "avg_revenue": "2.8억 원",
         "startup_cost": "4,500만 원"
+      }
+    ],
+    "베이커리": [
+      {
+        "rank": 1,
+        "brand": "파리바게뜨",
+        "stores": 3317,
+        "avg_revenue": "5억 원",
+        "startup_cost": "1억 원"
+      },
+      {
+        "rank": 2,
+        "brand": "뚜레쥬르",
+        "stores": 2800,
+        "avg_revenue": "4.5억 원",
+        "startup_cost": "9,000만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "크라운베이커리",
+        "stores": 1500,
+        "avg_revenue": "3억 원",
+        "startup_cost": "7,000만 원"
       }
     ]
   }

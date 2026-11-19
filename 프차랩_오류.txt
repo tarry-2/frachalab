@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/apple/Desktop/프차랩_크롤링.py': [Errno 1] Operation not permitted
