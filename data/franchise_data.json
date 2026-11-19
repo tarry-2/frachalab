@@ -23,6 +23,55 @@
         "stores": 12152,
         "avg_revenue": "6억 원",
         "startup_cost": "8,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "이마트24",
+        "stores": 6500,
+        "avg_revenue": "5억 원",
+        "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "미니스톱",
+        "stores": 2500,
+        "avg_revenue": "4억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "씨스페이스",
+        "stores": 1800,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "바이더웨이",
+        "stores": 1200,
+        "avg_revenue": "3억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "위드미",
+        "stores": 800,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "세이브존",
+        "stores": 600,
+        "avg_revenue": "2억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "이마트에브리데이",
+        "stores": 500,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "3,000만 원"
       }
     ],
     "치킨": [
@@ -46,6 +95,55 @@
         "stores": 1362,
         "avg_revenue": "5.5억 원",
         "startup_cost": "8,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "네네치킨",
+        "stores": 1200,
+        "avg_revenue": "4.5억 원",
+        "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "처갓집양념치킨",
+        "stores": 1100,
+        "avg_revenue": "4억 원",
+        "startup_cost": "6,500만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "푸라닭",
+        "stores": 900,
+        "avg_revenue": "3.8억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "호식이두마리치킨",
+        "stores": 800,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "돈치킨",
+        "stores": 700,
+        "avg_revenue": "3.2억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "치킨매니아",
+        "stores": 600,
+        "avg_revenue": "3억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "치킨의정석",
+        "stores": 500,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "4,000만 원"
       }
     ],
     "커피": [
@@ -69,6 +167,55 @@
         "stores": 2581,
         "avg_revenue": "3.2억 원",
         "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "투썸플레이스",
+        "stores": 1500,
+        "avg_revenue": "4억 원",
+        "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "스타벅스",
+        "stores": 1800,
+        "avg_revenue": "5억 원",
+        "startup_cost": "1억 원"
+      },
+      {
+        "rank": 6,
+        "brand": "엔제리너스",
+        "stores": 1200,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "탐앤탐스",
+        "stores": 1000,
+        "avg_revenue": "3.2억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "커피베이",
+        "stores": 800,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "카페드롭탑",
+        "stores": 600,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "커피명가",
+        "stores": 500,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "3,500만 원"
       }
     ],
     "분식": [
@@ -92,6 +239,55 @@
         "stores": 346,
         "avg_revenue": "1.8억 원",
         "startup_cost": "3,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "고봉민김밥",
+        "stores": 300,
+        "avg_revenue": "1.6억 원",
+        "startup_cost": "2,800만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "바르다김선생",
+        "stores": 250,
+        "avg_revenue": "1.5억 원",
+        "startup_cost": "2,500만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "선비꼬마김밥",
+        "stores": 200,
+        "avg_revenue": "1.3억 원",
+        "startup_cost": "2,200만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "김밥천국",
+        "stores": 180,
+        "avg_revenue": "1.2억 원",
+        "startup_cost": "2,000만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "떡볶이나라",
+        "stores": 150,
+        "avg_revenue": "1억 원",
+        "startup_cost": "1,800만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "분식당",
+        "stores": 120,
+        "avg_revenue": "9,000만 원",
+        "startup_cost": "1,500만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "김밥마을",
+        "stores": 100,
+        "avg_revenue": "8,000만 원",
+        "startup_cost": "1,200만 원"
       }
     ],
     "피자": [
@@ -115,6 +311,55 @@
         "stores": 476,
         "avg_revenue": "4억 원",
         "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "반올림피자",
+        "stores": 367,
+        "avg_revenue": "3.5억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "피자헛",
+        "stores": 300,
+        "avg_revenue": "3.2억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "미스터피자",
+        "stores": 250,
+        "avg_revenue": "3억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "고피자",
+        "stores": 200,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "피자알볼로",
+        "stores": 180,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "피자나라",
+        "stores": 150,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "피자마을",
+        "stores": 120,
+        "avg_revenue": "2억 원",
+        "startup_cost": "3,000만 원"
       }
     ],
     "일식": [
@@ -138,6 +383,55 @@
         "stores": 20,
         "avg_revenue": "3.3억 원",
         "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "시선",
+        "stores": 122,
+        "avg_revenue": "3억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "돈까스촌",
+        "stores": 100,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "초밥왕",
+        "stores": 80,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "일식당",
+        "stores": 70,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "라멘나라",
+        "stores": 60,
+        "avg_revenue": "2억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "우동마을",
+        "stores": 50,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "일식마을",
+        "stores": 40,
+        "avg_revenue": "1.5억 원",
+        "startup_cost": "3,000만 원"
       }
     ],
     "중식": [
@@ -161,6 +455,55 @@
         "stores": 203,
         "avg_revenue": "2.8억 원",
         "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "마라탕후루",
+        "stores": 180,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "중국집",
+        "stores": 150,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "짬뽕나라",
+        "stores": 120,
+        "avg_revenue": "2억 원",
+        "startup_cost": "3,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "마라탕마을",
+        "stores": 100,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "2,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "중식당",
+        "stores": 80,
+        "avg_revenue": "1.5억 원",
+        "startup_cost": "2,000만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "중국음식점",
+        "stores": 60,
+        "avg_revenue": "1.2억 원",
+        "startup_cost": "1,800만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "중식마을",
+        "stores": 50,
+        "avg_revenue": "1억 원",
+        "startup_cost": "1,500만 원"
       }
     ],
     "베이커리": [
@@ -184,6 +527,199 @@
         "stores": 1500,
         "avg_revenue": "3억 원",
         "startup_cost": "7,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "삼립빵",
+        "stores": 1200,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "파리크라상",
+        "stores": 1000,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "브레댄코",
+        "stores": 800,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "크라운제과",
+        "stores": 600,
+        "avg_revenue": "2억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "빵마을",
+        "stores": 500,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "베이커리나라",
+        "stores": 400,
+        "avg_revenue": "1.5억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "빵집",
+        "stores": 300,
+        "avg_revenue": "1.2억 원",
+        "startup_cost": "3,000만 원"
+      }
+    ],
+    "한식": [
+      {
+        "rank": 1,
+        "brand": "우대포",
+        "stores": 24,
+        "avg_revenue": "3억 원",
+        "startup_cost": "6,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "남도보쌈짚",
+        "stores": 50,
+        "avg_revenue": "2.8억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "한식당",
+        "stores": 100,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "한식마을",
+        "stores": 80,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "한식나라",
+        "stores": 60,
+        "avg_revenue": "2억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "한식당",
+        "stores": 50,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "한식마을",
+        "stores": 40,
+        "avg_revenue": "1.5억 원",
+        "startup_cost": "3,000만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "한식나라",
+        "stores": 30,
+        "avg_revenue": "1.2억 원",
+        "startup_cost": "2,500만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "한식당",
+        "stores": 20,
+        "avg_revenue": "1억 원",
+        "startup_cost": "2,000만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "한식마을",
+        "stores": 10,
+        "avg_revenue": "8,000만 원",
+        "startup_cost": "1,500만 원"
+      }
+    ],
+    "주점": [
+      {
+        "rank": 1,
+        "brand": "삼백휴게실",
+        "stores": 1,
+        "avg_revenue": "2억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 2,
+        "brand": "주점",
+        "stores": 50,
+        "avg_revenue": "2.5억 원",
+        "startup_cost": "5,500만 원"
+      },
+      {
+        "rank": 3,
+        "brand": "주점마을",
+        "stores": 40,
+        "avg_revenue": "2.2억 원",
+        "startup_cost": "5,000만 원"
+      },
+      {
+        "rank": 4,
+        "brand": "주점나라",
+        "stores": 30,
+        "avg_revenue": "2억 원",
+        "startup_cost": "4,500만 원"
+      },
+      {
+        "rank": 5,
+        "brand": "주점당",
+        "stores": 25,
+        "avg_revenue": "1.8억 원",
+        "startup_cost": "4,000만 원"
+      },
+      {
+        "rank": 6,
+        "brand": "주점마을",
+        "stores": 20,
+        "avg_revenue": "1.5억 원",
+        "startup_cost": "3,500만 원"
+      },
+      {
+        "rank": 7,
+        "brand": "주점나라",
+        "stores": 15,
+        "avg_revenue": "1.2억 원",
+        "startup_cost": "3,000만 원"
+      },
+      {
+        "rank": 8,
+        "brand": "주점당",
+        "stores": 10,
+        "avg_revenue": "1억 원",
+        "startup_cost": "2,500만 원"
+      },
+      {
+        "rank": 9,
+        "brand": "주점마을",
+        "stores": 8,
+        "avg_revenue": "8,000만 원",
+        "startup_cost": "2,000만 원"
+      },
+      {
+        "rank": 10,
+        "brand": "주점나라",
+        "stores": 5,
+        "avg_revenue": "6,000만 원",
+        "startup_cost": "1,500만 원"
       }
     ]
   }
