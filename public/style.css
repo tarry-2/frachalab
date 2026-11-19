@@ -131,3 +131,28 @@ footer{border-top:1px solid #374359}
 .catalog-search label{font-size:.88rem;font-weight:720}
 .catalog-search button{min-height:45px;padding-inline:20px;background:var(--accent);color:var(--accent-on);border-color:var(--accent)}
 @media(max-width:520px){.catalog-search{grid-template-columns:54px minmax(0,1fr) auto;gap:8px;padding:8px}.catalog-search img{height:58px;object-position:58% center}.catalog-search button{padding-inline:10px}.catalog-search input{padding-inline:8px}}
+
+.research-nav { background: var(--surface); border-bottom: 1px solid var(--border); }
+.research-nav .wrap { display: flex; gap: 8px 28px; flex-wrap: wrap; padding-block: 8px; }
+.research-nav a { display: inline-flex; align-items: center; min-height: 34px; text-decoration: none; font-size: .9rem; font-weight: 720; }
+.research-nav a:hover, .research-nav a[aria-current] { text-decoration: underline; text-underline-offset: .35em; color: var(--accent); }
+.page-research { --section-hero: #102f30; --section-light: #a7dfd0; }
+.page-research[data-view=sectors] { --section-hero: #3d2414; --section-light: #ffd091; }
+.page-research[data-view=markets] { --section-hero: #29331a; --section-light: #dceca7; }
+.page-research[data-view=finance] { --section-hero: #262439; --section-light: #ded0ff; }
+.page-research[data-view=insurance] { --section-hero: #172c42; --section-light: #bccff7; }
+.research-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+.research-content .filters { grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
+.research-content .filters .search { grid-column: auto; }
+.research-content .table-frame { margin-bottom: 26px; }
+.research-content .detail-grid dd { overflow-wrap: anywhere; }
+.research-sources { margin-block: 16px; line-height: 1.65; color: var(--muted); }
+.research-sources a, .research-content td a { color: var(--accent); }
+@media print {
+  .page-research .masthead, .page-research .research-nav, .page-research .hero-art,
+  .page-research .research-tools, .page-research .filters, .page-research footer { display: none; }
+  .page-research, .page-research .hero { background: white; color: black; }
+  .page-research .lead, .page-research .kicker { color: #333; }
+  .page-research .hero-inner { padding: 0; display: block; }
+  .page-research .table-frame { overflow: visible; }
+}

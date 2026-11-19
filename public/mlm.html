@@ -11,12 +11,15 @@ try {
   if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
 } catch {}
 </script>
-<link rel="stylesheet" href="/style.css?v=editorial">
+<link rel="stylesheet" href="/style.css?v=research">
 <script type="module" src="/mlm.js"></script>
 <script type="module" src="/mlm-changes.js"></script>
 </head>
 <body class="page-mlm">
 <header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html">통합검색</a><a href="/#ranking">브랜드 순위</a><a href="/mlm.html" aria-current="page">다단계판매</a><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button></nav></div></header>
+<nav class="research-nav" aria-label="자료실 메뉴"><div class="wrap">
+<a href="/research.html?view=companies">기업 정보</a><a href="/research.html?view=sectors">업종 비교</a><a href="/research.html?view=markets">상권 비교</a><a href="/research.html?view=finance">본사 재무</a><a href="/research.html?view=insurance">보험</a>
+</div></nav>
 <main>
 <section class="hero"><div class="wrap hero-inner"><div class="hero-copy"><p class="kicker">공정거래위원회 사업자 정보공개</p><h1>다단계판매업체<br>매출 순위</h1><p class="lead">공시 대상 업체의 매출, 판매원, 후원수당과 재무 현황을 살펴봐.</p><dl class="snapshot"><div><dt>실적 기준</dt><dd id="mlm-reference">—</dd></div><div><dt>공시 업체</dt><dd id="mlm-company-count">—</dd></div><div><dt>다단계 매출 합계</dt><dd id="mlm-total">—</dd></div></dl></div><figure class="hero-art"><img src="/images/direct-selling-research.webp" alt="다단계판매업체 재무와 공개 자료를 검토하는 모습을 연출한 이미지" width="1200" height="800" fetchpriority="high"></figure></div></section>
 <div class="wrap content">
