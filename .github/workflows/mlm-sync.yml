@@ -23,11 +23,12 @@ jobs:
         run: |
           pip install -r scripts/requirements-mlm.txt
           python scripts/sync-mlm.py
+          python scripts/sync-mlm-changes.py
       - name: 갱신 데이터 반영
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/mlm.json
+          git add public/mlm.json public/mlm-changes.json
           git diff --cached --quiet && exit 0
           git commit -m "프차랩 공정위 다단계판매 일일 갱신"
           git pull --rebase origin master

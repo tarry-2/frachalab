@@ -39,3 +39,6 @@ img.logo{background:#fff}
 #mlm-panel-body .table-frame td,#mlm-panel-body .detail-grid dd{white-space:normal;overflow-wrap:anywhere}
 #mlm-total{font-size:clamp(.75rem,1.6vw,1rem);overflow-wrap:anywhere}
 @media(max-width:520px){.mast-inner:has(#open-compare){flex-wrap:wrap;padding-block:10px;gap:8px}.mast-inner:has(#open-compare) nav{flex-wrap:wrap;gap:9px}}
+.mlm-sections{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.mlm-sections a{background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--accent);padding:9px 13px;font-weight:700;text-decoration:none}
+.mlm-changes{margin-bottom:42px}.mlm-changes .detail-note{margin-top:10px}
