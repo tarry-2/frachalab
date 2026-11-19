@@ -32,19 +32,20 @@ install.addEventListener('click', async () => {
 });
 updateInstall();
 
-share.addEventListener('click', async () => {
-  const url = new URL(location.pathname + location.search + location.hash, 'https://atoz.xn--zk5biyyw.com').href;
-  if (typeof navigator.share === 'function') {
-    try {
-      await navigator.share({title: document.title, url});
-      return;
-    } catch (error) {
-      if (error.name === 'AbortError') return;
-    }
-  }
-  address.value = url;
+const deviceShare = document.getElementById('site-share-device');
+deviceShare.hidden = typeof navigator.share !== 'function';
+share.addEventListener('click', () => {
+  address.value = new URL(location.pathname + location.search + location.hash, 'https://atoz.xn--zk5biyyw.com').href;
   feedback.textContent = '';
   dialog.showModal();
+});
+deviceShare.addEventListener('click', async () => {
+  try {
+    await navigator.share({title: document.title, url: address.value});
+    dialog.close();
+  } catch (error) {
+    if (error.name !== 'AbortError') feedback.textContent = '기기 공유 메뉴를 열 수 없어. 링크 복사를 이용해 줘.';
+  }
 });
 document.getElementById('site-share-copy').addEventListener('click', async () => {
   try {
