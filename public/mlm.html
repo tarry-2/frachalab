@@ -11,7 +11,7 @@ try {
   if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
 } catch {}
 </script>
-<link rel="stylesheet" href="/style.css?v=site-actions">
+<link rel="stylesheet" href="/style.css?v=visitor-stats">
 <script type="module" src="/mlm.js"></script>
 <script type="module" src="/mlm-changes.js"></script>
 <link rel="manifest" href="/manifest.webmanifest">
@@ -22,6 +22,7 @@ try {
 <meta property="og:description" content="기업과 시장의 공시를 모아 보는 자료실">
 <meta property="og:image" content="https://atoz.xn--zk5biyyw.com/images/share-preview.jpg">
 <script src="/site-actions.js" defer></script>
+<script src="/visitor-stats.js" defer></script>
 </head>
 <body class="page-mlm">
 <header class="masthead"><div class="wrap mast-inner"><a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a><nav aria-label="주 메뉴"><a href="/search.html">통합검색</a><a href="/#ranking">브랜드 순위</a><a href="/mlm.html" aria-current="page">다단계판매</a><button type="button" id="site-install" class="site-action" hidden>앱 설치</button><button type="button" id="site-share" class="site-action" aria-haspopup="dialog">카카오톡 공유</button><button type="button" id="theme-toggle" aria-label="다크 모드" aria-pressed="false">다크</button></nav></div></header>
@@ -51,7 +52,7 @@ try {
 </div>
 </main>
 <dialog id="mlm-panel" aria-labelledby="mlm-panel-title"><header class="dialog-head"><h2 id="mlm-panel-title"></h2><form method="dialog"><button>닫기</button></form></header><div id="mlm-panel-body"></div></dialog>
-<footer><div class="wrap">산업서가 · 다단계판매업체 공시 비교</div></footer>
+<footer><div class="wrap">산업서가 · 다단계판매업체 공시 비교<small id="visitor-stats" title="현재 이용은 최근 5분 활동 세션, 오늘 방문은 한국시간 기준이야." hidden></small></div></footer>
 <dialog id="site-share-dialog" aria-labelledby="site-share-title">
 <div class="dialog-head"><h2 id="site-share-title">카카오톡으로 링크 보내기</h2><form method="dialog"><button type="submit">닫기</button></form></div>
 <div class="site-share-body"><p>아래 링크를 복사해 카카오톡 채팅방에 붙여넣어 줘.</p><label>현재 페이지 링크<input id="site-share-url" type="url" readonly></label><button type="button" class="compare-btn" id="site-share-device" hidden>기기에서 공유</button> <button type="button" class="compare-btn" id="site-share-copy">링크 복사</button><p id="site-share-status" role="status"></p></div>

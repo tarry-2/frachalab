@@ -167,3 +167,6 @@ footer{border-top:1px solid #374359}
 .insurance-tabs { margin: 0 0 26px; }
 .insurance-tabs a[aria-current=page] { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
 @media print { .insurance-tabs { display: none; } }
+
+#visitor-stats { margin-top: 8px; color: #cfdbef; font-size: .82rem; }
+#visitor-stats:not([hidden]) { display: block; }

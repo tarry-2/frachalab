@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기업·시장 자료실 | 산업서가</title>
 <script>try { const theme = localStorage.getItem('frachalab-theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch {}</script>
-<link rel="stylesheet" href="/style.css?v=insurance-tabs">
+<link rel="stylesheet" href="/style.css?v=visitor-stats">
 <script type="module" src="/research.js"></script>
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/app-192.png">
@@ -15,6 +15,7 @@
 <meta property="og:description" content="기업과 시장의 공시를 모아 보는 자료실">
 <meta property="og:image" content="https://atoz.xn--zk5biyyw.com/images/share-preview.jpg">
 <script src="/site-actions.js" defer></script>
+<script src="/visitor-stats.js" defer></script>
 </head>
 <body class="page-research">
 <header class="masthead"><div class="wrap mast-inner">
@@ -33,7 +34,7 @@
 <div class="research-tools"><button class="compare-btn" id="research-share">링크 복사</button><button class="compare-btn" id="research-print">인쇄</button><span id="research-notice" role="status"></span></div>
 <div id="research-results" aria-label="자료 조회"><p role="status">자료를 불러오는 중이야.</p></div>
 </div></main>
-<footer><div class="wrap">산업서가 · 기업과 시장의 공시를 모아 보는 자료실</div></footer>
+<footer><div class="wrap">산업서가 · 기업과 시장의 공시를 모아 보는 자료실<small id="visitor-stats" title="현재 이용은 최근 5분 활동 세션, 오늘 방문은 한국시간 기준이야." hidden></small></div></footer>
 <dialog id="site-share-dialog" aria-labelledby="site-share-title">
 <div class="dialog-head"><h2 id="site-share-title">카카오톡으로 링크 보내기</h2><form method="dialog"><button type="submit">닫기</button></form></div>
 <div class="site-share-body"><p>아래 링크를 복사해 카카오톡 채팅방에 붙여넣어 줘.</p><label>현재 페이지 링크<input id="site-share-url" type="url" readonly></label><button type="button" class="compare-btn" id="site-share-device" hidden>기기에서 공유</button> <button type="button" class="compare-btn" id="site-share-copy">링크 복사</button><p id="site-share-status" role="status"></p></div>
