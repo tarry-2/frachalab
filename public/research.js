@@ -301,22 +301,43 @@ async function finance() {
   render();
 }
 async function insurance() {
-  const categories = [
-    ['손해보험 원수사', '원수보험료와 회사별 경영공시', '손해보험협회 공시실', 'https://kpub.knia.or.kr/'],
-    ['법인보험대리점(GA)', '등록 현황, 소속 설계사 수, 계약 유지율 등 공시 항목', '이클린보험서비스 GA 공시', 'https://eclean.knia.or.kr/eclean/main010m'],
-  ];
-  const life = await get('insurance-life');
+  const [life, nonlife] = await Promise.all([get('insurance-life'), get('insurance-nonlife')]);
   const ranking = [...life.companies].sort((a, b) => b.premiums - a.premiums);
   root.append(node('h2', '생명보험 원수사 순위'),
     node('p', life.year + '년 생명보험협회 통계연보 · 수입보험료 합계 기준 · 단위 백만원', 'data-status'),
     table(['순위', '보험사', '수입보험료 합계', '일반계정', '특별계정'],
       ranking.map((row, i) => [i + 1, row.name, amount(row.premiums), amount(row.general), amount(row.separate)])),
     source('생명보험협회 통계연보', life.source), source('수입보험료 원본 엑셀', life.file));
-  for (const [heading, description, label, url] of categories) {
-    const section = node('section');
-    section.append(node('h2', heading), node('p', description), source(label, url));
-    root.append(section);
+  const periods = years(nonlife.companies[0].share);
+  const period = node('select');
+  const filters = node('div', undefined, 'filters');
+  filters.append(field('손해보험 기준 연도', period, periods.map(year => [year, year + '년'])));
+  selectOption(period, params.get('nonlifeYear'));
+  const output = node('section');
+  root.append(node('h2', '국내 일반 손해보험사 순위'),
+    node('p', '공시 비교표 수록 회사 · IFRS17 보험료 점유율 · 보험계약과 투자계약의 보험료 합계', 'data-status'),
+    filters, output, source('한국거래소 공시 원문 · 손해보험협회 손해보험통계 인용', nonlife.source),
+    source('손해보험협회 공시실', 'https://kpub.knia.or.kr/'),
+    node('h2', '법인보험대리점(GA)'),
+    node('p', '등록 현황, 소속 설계사 수, 계약 유지율은 GA 공시에서 찾아볼 수 있어.'),
+    source('이클린보험서비스 GA 공시', 'https://eclean.knia.or.kr/eclean/main010m'));
+  function renderNonlife() {
+    const year = period.value;
+    const share = row => row.share[year];
+    const companies = [...nonlife.companies].sort((a, b) => (share(b) ?? -1) - (share(a) ?? -1));
+    let rank = 0;
+    const rows = companies.map((row, index) => {
+      const value = share(row);
+      if (!index || value !== share(companies[index - 1])) rank = index + 1;
+      return [value === null ? '—' : rank, row.name, value === null ? '공시 표기 없음' : value.toFixed(1) + '%'];
+    });
+    output.replaceChildren(table(['순위', '보험사', year + '년 보험료 점유율'], rows));
   }
+  period.addEventListener('change', () => {
+    setParams({nonlifeYear: period.value});
+    renderNonlife();
+  });
+  renderNonlife();
 }
 document.body.dataset.view = view;
 document.title = title + ' | 산업서가';
