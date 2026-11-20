@@ -301,26 +301,69 @@ async function finance() {
   render();
 }
 async function insurance() {
-  const [life, nonlife] = await Promise.all([get('insurance-life'), get('insurance-nonlife')]);
+  const tabs = [['life', '생명보험'], ['nonlife', '손해보험'], ['ga', '법인보험대리점(GA)']];
+  const selected = tabs.some(([key]) => key === params.get('insuranceType'))
+    ? params.get('insuranceType') : params.has('nonlifeYear') ? 'nonlife' : 'life';
+  const nav = node('nav', undefined, 'mlm-sections insurance-tabs');
+  nav.setAttribute('aria-label', '보험 하위 메뉴');
+  for (const [key, label] of tabs) {
+    const query = new URLSearchParams(params);
+    query.set('insuranceType', key);
+    if (key !== selected) query.delete('insuranceQuery');
+    const item = link(label, '?' + query);
+    if (key === selected) item.setAttribute('aria-current', 'page');
+    nav.append(item);
+  }
+  root.append(nav);
+  return {life: lifeInsurance, nonlife: nonlifeInsurance, ga: gaInsurance}[selected]();
+}
+function insuranceSearch(filters, label) {
+  const query = node('input');
+  query.type = 'search';
+  query.value = params.get('insuranceQuery') || '';
+  filters.append(field(label, query));
+  return query;
+}
+function insuranceTable(headers, rows) {
+  return rows.length ? table(headers, rows) : node('p', '검색 결과가 없어.');
+}
+async function lifeInsurance() {
+  const life = await get('insurance-life');
   const ranking = [...life.companies].sort((a, b) => b.premiums - a.premiums);
+  const filters = node('div', undefined, 'filters');
+  const query = insuranceSearch(filters, '생명보험사 검색');
+  const output = node('section');
   root.append(node('h2', '생명보험 원수사 순위'),
     node('p', life.year + '년 생명보험협회 통계연보 · 수입보험료 합계 기준 · 단위 백만원', 'data-status'),
-    table(['순위', '보험사', '수입보험료 합계', '일반계정', '특별계정'],
-      ranking.map((row, i) => [i + 1, row.name, amount(row.premiums), amount(row.general), amount(row.separate)])),
-    source('생명보험협회 통계연보', life.source), source('수입보험료 원본 엑셀', life.file));
+    filters, output, source('생명보험협회 통계연보', life.source), source('수입보험료 원본 엑셀', life.file),
+    ...Object.entries(life.statisticsFiles).map(([label, id]) => source(label + ' 원본 엑셀', 'https://www.klia.or.kr/FileDown.do?fileNo=' + id + '&seq=1')));
+  function render() {
+    const keyword = normalize(query.value);
+    const rows = ranking.map((row, index) => [index + 1, row]).filter(([, row]) =>
+      normalize(row.name).includes(keyword) || (keyword.length > 2 && keyword === normalize(row.name + '생명')));
+    const metrics = [['premiums', '수입보험료'], ['general', '일반계정 보험료'], ['separate', '특별계정 보험료'],
+      ['insuranceRevenue', '보험수익'], ['netIncome', '당기순이익'], ['assets', '총자산'],
+      ['newContracts', '신계약 (건)'], ['activeContracts', '연말 보유계약 (건)'], ['agents', '설계사 (명)'],
+      ['offices', '점포 합계'], ['regionalOffices', '지역본부'], ['branches', '지점'], ['salesOffices', '영업소']];
+    output.replaceChildren(insuranceTable(['순위', '보험사', ...metrics.map(([, label]) => label)],
+      rows.map(([rank, row]) => [rank, row.name, ...metrics.map(([key]) => amount(row[key]))])));
+  }
+  query.addEventListener('input', () => { setParams({insuranceQuery: query.value.trim()}); render(); });
+  render();
+}
+async function nonlifeInsurance() {
+  const nonlife = await get('insurance-nonlife');
   const periods = years(nonlife.companies[0].share);
   const period = node('select');
   const filters = node('div', undefined, 'filters');
   filters.append(field('손해보험 기준 연도', period, periods.map(year => [year, year + '년'])));
   selectOption(period, params.get('nonlifeYear'));
+  const query = insuranceSearch(filters, '손해보험사 검색');
   const output = node('section');
   root.append(node('h2', '국내 일반 손해보험사 순위'),
     node('p', '공시 비교표 수록 회사 · IFRS17 보험료 점유율 · 보험계약과 투자계약의 보험료 합계', 'data-status'),
     filters, output, source('한국거래소 공시 원문 · 손해보험협회 손해보험통계 인용', nonlife.source),
-    source('손해보험협회 공시실', 'https://kpub.knia.or.kr/'),
-    node('h2', '법인보험대리점(GA)'),
-    node('p', '등록 현황, 소속 설계사 수, 계약 유지율은 GA 공시에서 찾아볼 수 있어.'),
-    source('이클린보험서비스 GA 공시', 'https://eclean.knia.or.kr/eclean/main010m'));
+    source('손해보험협회 공시실', 'https://kpub.knia.or.kr/'));
   function renderNonlife() {
     const year = period.value;
     const share = row => row.share[year];
@@ -331,13 +374,78 @@ async function insurance() {
       if (!index || value !== share(companies[index - 1])) rank = index + 1;
       return [value === null ? '—' : rank, row.name, value === null ? '공시 표기 없음' : value.toFixed(1) + '%'];
     });
-    output.replaceChildren(table(['순위', '보험사', year + '년 보험료 점유율'], rows));
+    const keyword = normalize(query.value);
+    output.replaceChildren(insuranceTable(['순위', '보험사', year + '년 보험료 점유율'],
+      rows.filter(row => normalize(row[1]).includes(keyword))));
   }
   period.addEventListener('change', () => {
     setParams({nonlifeYear: period.value});
     renderNonlife();
   });
+  query.addEventListener('input', () => { setParams({insuranceQuery: query.value.trim()}); renderNonlife(); });
   renderNonlife();
+}
+async function gaInsurance() {
+  const data = await get('insurance-ga');
+  const period = node('select');
+  const filters = node('div', undefined, 'filters');
+  const labels = code => code.slice(0, 4) + (code.endsWith('06') ? '년 상반기' : '년 12월');
+  filters.append(field('GA 공시 기준', period, years(data.periods).map(code => [code, labels(code)])));
+  selectOption(period, params.get('gaPeriod'));
+  const query = insuranceSearch(filters, '대리점명·등록번호·주소 검색');
+  const region = node('select');
+  const regionField = field('본사 지역', region);
+  filters.append(regionField);
+  function loadRegions(selected) {
+    const names = order(new Set(data.periods[period.value].map(row => row.region).filter(Boolean)));
+    region.replaceChildren(new Option('전체 지역', ''));
+    for (const name of names) region.add(new Option(name, name));
+    regionField.hidden = !names.length;
+    selectOption(region, selected);
+  }
+  loadRegions(params.get('gaRegion'));
+  period.addEventListener('change', () => loadRegions());
+  const output = node('section');
+  root.append(node('h2', '법인보험대리점 설계사 수 순위'),
+    node('p', '생명보험협회 대형 GA 비교공시 기준. 2026년 상반기는 요약공시의 본사·지점·수익·신계약을 함께 보여줘. 등록일은 보험대리점 등록 기준이야.', 'data-status'),
+    filters, output,
+    source('생명보험협회 법인보험대리점 비교공시', data.source),
+    source('이클린보험서비스 GA 공시', 'https://eclean.knia.or.kr/eclean/main010m'));
+  const percent = value => numeric(value) === null ? missing : format.format(numeric(value)) + '%';
+  const metrics = [
+    ['retentionLife', '정착률 생보'], ['retentionNonlife', '정착률 손보'],
+    ['life13', '13회 유지율 생보'], ['nonlife13', '13회 유지율 손보'],
+    ['life25', '25회 유지율 생보'], ['nonlife25', '25회 유지율 손보'],
+    ['incompleteLife', '불완전판매율 생보'], ['incompleteNonlife', '불완전판매율 손보'],
+  ];
+  function render() {
+    const keyword = normalize(query.value);
+    const detailed = period.value === '202606';
+    const companies = [...data.periods[period.value]].sort((a, b) => (b.agents ?? -1) - (a.agents ?? -1));
+    let rank = 0;
+    const rows = companies.flatMap((row, index) => {
+      if (!index || row.agents !== companies[index - 1].agents) rank = index + 1;
+      if (region.value && row.region !== region.value) return [];
+      if (![row.name, row.registration, row.address].some(value => normalize(value).includes(keyword))) return [];
+      const office = detailed ? [text(row.region), text(row.address), contact(row.phone), text(row.registeredOn),
+        amount(row.branches), amount(row.reportedIncome), amount(row.newLife), amount(row.newNonlife)] : [];
+      return [[row.agents === null ? '—' : rank, row.name, row.registration, amount(row.agents), ...office,
+        ...metrics.map(([key]) => percent(row[key])), amount(row.withdrawalsLife), amount(row.withdrawalsNonlife)]];
+    });
+    const officeHeaders = detailed ? ['본사 지역', '본사 주소', '연락처', '등록일', '지점 수', '공시 수익 (천원)',
+      '신계약 생보 (건)', '신계약 손보 (건)'] : [];
+    output.replaceChildren(node('p', labels(period.value) + ' · 검색 결과 ' + amount(rows.length) + '곳 / 공시 ' + amount(companies.length) + '곳', 'research-sources'),
+      insuranceTable(['순위', '대리점', '등록번호', '설계사 수', ...officeHeaders, ...metrics.map(([, label]) => label),
+        '청약철회 생보 (건)', '청약철회 손보 (건)'], rows));
+  }
+  const update = () => {
+    setParams({gaPeriod: period.value, gaRegion: region.value, insuranceQuery: query.value.trim()});
+    render();
+  };
+  query.addEventListener('input', update);
+  period.addEventListener('change', update);
+  region.addEventListener('change', update);
+  render();
 }
 document.body.dataset.view = view;
 document.title = title + ' | 산업서가';

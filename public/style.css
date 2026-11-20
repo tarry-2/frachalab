@@ -163,3 +163,7 @@ footer{border-top:1px solid #374359}
 .site-share-body { padding: 18px 20px; }
 .site-share-body input { margin-bottom: 12px; }
 .site-share-body [role=status]:empty { display: none; }
+
+.insurance-tabs { margin: 0 0 26px; }
+.insurance-tabs a[aria-current=page] { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
+@media print { .insurance-tabs { display: none; } }
