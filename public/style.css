@@ -170,3 +170,8 @@ footer{border-top:1px solid #374359}
 
 #visitor-stats { margin-top: 8px; color: #cfdbef; font-size: .82rem; }
 #visitor-stats:not([hidden]) { display: block; }
+
+.insurance-company-detail { white-space: normal; }
+.insurance-company-detail[open] { min-width: 230px; }
+.insurance-company-detail summary { color: var(--accent); cursor: pointer; font-weight: 700; }
+.insurance-company-detail dl { margin-block: 10px; }

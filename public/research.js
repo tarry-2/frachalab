@@ -372,10 +372,17 @@ async function nonlifeInsurance() {
     const rows = companies.map((row, index) => {
       const value = share(row);
       if (!index || value !== share(companies[index - 1])) rank = index + 1;
-      return [value === null ? '—' : rank, row.name, value === null ? '공시 표기 없음' : value.toFixed(1) + '%'];
+      const disclosure = row.details?.[year];
+      const companyDetail = disclosure ? node('details', undefined, 'insurance-company-detail') : '—';
+      if (disclosure) {
+        companyDetail.append(node('summary', row.name + ' 공시 상세'), node('p', disclosure.note),
+          details(disclosure.metrics.map(([label, value, unit]) => [label, amount(value) + ' ' + unit])),
+          link('사업보고서·감사보고서 원문', disclosure.source));
+      }
+      return [value === null ? '—' : rank, row.name, value === null ? '공시 표기 없음' : value.toFixed(1) + '%', companyDetail];
     });
     const keyword = normalize(query.value);
-    output.replaceChildren(insuranceTable(['순위', '보험사', year + '년 보험료 점유율'],
+    output.replaceChildren(insuranceTable(['순위', '보험사', year + '년 보험료 점유율', '회사별 공시'],
       rows.filter(row => normalize(row[1]).includes(keyword))));
   }
   period.addEventListener('change', () => {
