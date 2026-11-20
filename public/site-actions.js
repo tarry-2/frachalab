@@ -35,7 +35,12 @@ updateInstall();
 const deviceShare = document.getElementById('site-share-device');
 deviceShare.hidden = typeof navigator.share !== 'function';
 share.addEventListener('click', () => {
-  address.value = new URL(location.pathname + location.search + location.hash, 'https://atoz.xn--zk5biyyw.com').href;
+  const url = new URL(location.pathname + location.search + location.hash, 'https://atoz.xn--zk5biyyw.com');
+  if (url.pathname === '/' || url.pathname === '/index.html') {
+    url.pathname = '/';
+    url.searchParams.set('share', '20261120');
+  }
+  address.value = url.href;
   feedback.textContent = '';
   dialog.showModal();
 });
