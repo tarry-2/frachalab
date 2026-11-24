@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>그만두는 비용 | 산업서가</title>
+<script>try { const theme = localStorage.getItem('frachalab-theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch {}</script>
+<link rel="stylesheet" href="/style.css?v=mobile-nav">
+<script type="module" src="/exit-cost.js"></script>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/app-192.png">
+<meta name="theme-color" content="#3f537d">
+<meta property="og:type" content="website">
+<meta property="og:title" content="매장을 접으면 얼마가 남을까? | 산업서가">
+<meta property="og:description" content="보증금, 장비 처분, 철거와 남은 계약을 한 장에 놓고 매장 정리 비용을 계산해 봐.">
+<meta property="og:image" content="https://atoz.xn--zk5biyyw.com/images/store-exit.webp">
+<script src="/site-actions.js" defer></script>
+<script src="/visitor-stats.js" defer></script>
+</head>
+<body class="page-exit-cost">
+<header class="masthead"><div class="wrap mast-inner">
+<a class="brand" href="/"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>산업서가</strong><small>기업과 시장의 공시를 모아 보는 자료실</small></span></a>
+<nav aria-label="주 메뉴"><a href="/">프랜차이즈</a><a href="/mlm.html">다단계판매</a><a href="/search.html">통합검색</a><button type="button" id="site-install" class="site-action" hidden>앱 설치</button><button type="button" id="site-share" class="site-action" aria-haspopup="dialog">카카오톡 공유</button><button type="button" id="theme-toggle" aria-pressed="false">다크</button></nav>
+</div></header>
+<nav class="research-nav" aria-label="자료실 메뉴"><div class="wrap">
+<a href="/research.html?view=companies">기업 정보</a><a href="/research.html?view=sectors">업종 비교</a><a href="/research.html?view=markets">상권 비교</a><a href="/research.html?view=finance">본사 재무</a><a href="/research.html?view=insurance">보험</a><a href="/exit-cost.html" aria-current="page">그만두는 비용</a>
+</div></nav>
+<main>
+<section class="hero"><div class="wrap hero-inner">
+  <div class="hero-copy">
+    <p class="kicker">그만두는 비용</p>
+    <h1>매장을 접으면<br>얼마가 남을까?</h1>
+    <p class="lead">카페를 1년 운영한 뒤 정리한다고 가정해 봐. 돌려받을 보증금, 장비 처분대금, 철거와 남은 계약 비용을 놓고 정리 후 잔액과 당장 필요한 현금을 계산해.</p>
+    <a class="exit-cta" href="#calculator">내 숫자로 계산하기</a>
+  </div>
+  <figure class="hero-art"><img src="/images/store-exit.webp" alt="짐을 정리한 카페 내부와 카운터에 놓인 열쇠" width="1200" height="800" fetchpriority="high"></figure>
+</div></section>
+<div class="wrap content exit-content">
+  <section id="calculator" aria-labelledby="calculator-title">
+    <header class="section-head"><div>
+      <h2 id="calculator-title">매장 정리 계산기</h2>
+      <p>단위는 만원이야. 처음 숫자는 비교를 위한 가상 사례야. 계약서·견적서에서 확인한 금액으로 바꿔 봐.</p>
+    </div></header>
+    <form id="exit-form" class="exit-calculator">
+      <div class="exit-inputs">
+        <fieldset>
+          <legend>받을 돈</legend>
+          <label>돌려받을 보증금 <input name="deposit" type="number" min="0" step="any" inputmode="decimal" value="2000" required></label>
+          <label>장비·집기 순매각대금 <input name="equipment" type="number" min="0" step="any" inputmode="decimal" value="250" required></label>
+          <p>보증금은 공제 후 예상 수령액을, 장비는 운반비·수수료를 뺀 금액을 적어.</p>
+        </fieldset>
+        <fieldset>
+          <legend>낼 돈</legend>
+          <label>철거·원상복구 <input name="restoration" type="number" min="0" step="any" inputmode="decimal" value="650" required></label>
+          <label>렌탈·구독 해지 정산 <input name="rental" type="number" min="0" step="any" inputmode="decimal" value="180" required></label>
+          <label>남은 임대료·관리비 <input name="rent" type="number" min="0" step="any" inputmode="decimal" value="230" required></label>
+          <label>기타 정산 <input name="other" type="number" min="0" step="any" inputmode="decimal" value="240" required></label>
+          <p>보증금에서 이미 공제한 돈은 여기서 다시 빼지 않아. 보증금과 별도로 내는 금액만 적어.</p>
+        </fieldset>
+        <fieldset>
+          <legend>정산 날짜</legend>
+          <label>받을 돈이 들어오기 전에 내야 할 금액 <input name="early" type="number" min="0" step="any" inputmode="decimal" value="830" required></label>
+          <p>위 ‘낼 돈’ 중 먼저 내는 부분이야. 철거 계약금이나 렌탈 해지비처럼 수령 전에 결제해야 할 돈을 더해.</p>
+        </fieldset>
+      </div>
+      <aside class="exit-results" aria-labelledby="result-title">
+        <h3 id="result-title">예상 정산</h3>
+        <dl aria-live="polite">
+          <div><dt>받을 돈 합계</dt><dd id="exit-in">—</dd></div>
+          <div><dt>낼 돈 합계</dt><dd id="exit-out">—</dd></div>
+          <div class="exit-total"><dt>정산 후 잔액</dt><dd id="exit-net">—</dd></div>
+          <div><dt>회수 전에 필요한 현금</dt><dd id="exit-early">—</dd></div>
+        </dl>
+        <p id="exit-error" role="status" hidden></p>
+        <p>잔액이 플러스여도 정산 날짜가 뒤로 밀리면 먼저 낼 현금이 필요해. 시작할 때 쓴 돈과 운영 중 손익은 이 계산에 포함되지 않아.</p>
+        <button class="compare-btn" type="reset">예시 금액으로 되돌리기</button>
+      </aside>
+    </form>
+  </section>
+
+  <section class="exit-section" aria-labelledby="example-title">
+    <h2 id="example-title">같은 카페를 정리하는 두 가지 경우</h2>
+    <p>보증금 2,000만원을 돌려받는 가상 사례야. 철거 범위와 장비 매각 조건만 바꿨을 때 결과가 얼마나 달라지는지 비교해 봐.</p>
+    <div class="table-frame exit-example"><table>
+      <caption>가상 사례 비교 · 단위 만원</caption>
+      <thead><tr><th scope="col">정산 항목</th><th scope="col">견적·매각 조건 A</th><th scope="col">견적·매각 조건 B</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">받을 보증금</th><td>2,000</td><td>2,000</td></tr>
+        <tr><th scope="row">장비 순매각대금</th><td>250</td><td>100</td></tr>
+        <tr><th scope="row">철거·원상복구</th><td>650</td><td>950</td></tr>
+        <tr><th scope="row">렌탈·임대료·기타</th><td>650</td><td>650</td></tr>
+        <tr><th scope="row">정산 후 잔액</th><td>950</td><td>500</td></tr>
+      </tbody>
+    </table></div>
+    <p>장비를 예상보다 150만원 낮게 팔고 철거비가 300만원 더 들면 잔액은 450만원 줄어. 매각가와 철거비를 각각 낙관·보수 조건으로 다시 계산해 보면 필요한 여유 자금이 보이기 시작해.</p>
+  </section>
+
+  <section class="exit-section" aria-labelledby="evidence-title">
+    <h2 id="evidence-title">숫자는 어디서 확인할까?</h2>
+    <dl class="exit-checklist">
+      <div><dt>보증금·임대료</dt><dd>임대차계약서와 임대인 정산 내역을 대조해. 예상 반환일, 공제 항목, 임대료가 끝나는 날짜를 각각 적어.</dd></div>
+      <div><dt>철거·원상복구</dt><dd>임대차계약서와 입점 당시 사진을 놓고 남겨도 되는 시설과 제거할 시설을 확인해. 같은 작업 범위로 견적을 받아 폐기물 처리, 부가세, 추가 작업 조건까지 비교해.</dd></div>
+      <div><dt>장비·집기</dt><dd>소유 장비와 렌탈 장비를 먼저 나눠. 직접 소유한 장비는 실수령 예정액을, 렌탈 장비는 계약사가 안내한 반납·철거 비용을 확인해.</dd></div>
+      <div><dt>렌탈·구독</dt><dd>커피머신, 정수기, POS, 통신, 보안 등 계약마다 종료 예정일과 해지 정산서를 받아. 반납일과 마지막 자동이체일도 같이 확인해.</dd></div>
+      <div><dt>기타 정산</dt><dd>거래처 미지급금, 직원 정산, 예약·선결제 환불, 세금처럼 해당되는 항목을 따로 적어. 금액이 아직 정해지지 않았다면 확인할 곳과 예정일을 남겨.</dd></div>
+    </dl>
+  </section>
+
+  <section class="sources" aria-labelledby="official-title">
+    <h2 id="official-title">폐업 신고 확인</h2>
+    <p>사업자등록 폐업 신고와 세금 신고는 매장 명도 일정과 따로 관리해. 업종과 사업자 유형에 맞는 절차는 국세청 안내에서 확인할 수 있어.</p>
+    <p><a href="https://www.nts.go.kr/nts/cm/cntnts/cntntsView.do?cntntsId=7780&amp;mi=2233">국세청 휴·폐업 신고 안내</a><a href="https://www.hometax.go.kr/">홈택스</a></p>
+  </section>
+</div>
+</main>
+<footer><div class="wrap">산업서가 · 그만두는 비용<small id="visitor-stats" title="현재 이용은 최근 5분 활동 세션, 오늘 방문은 한국시간 기준이야." hidden></small></div></footer>
+<dialog id="site-share-dialog" aria-labelledby="site-share-title">
+<div class="dialog-head"><h2 id="site-share-title">카카오톡으로 링크 보내기</h2><form method="dialog"><button type="submit">닫기</button></form></div>
+<div class="site-share-body"><p>아래 링크를 복사해 카카오톡 채팅방에 붙여넣어 줘.</p><label>현재 페이지 링크<input id="site-share-url" type="url" readonly></label><button type="button" class="compare-btn" id="site-share-device" hidden>기기에서 공유</button> <button type="button" class="compare-btn" id="site-share-copy">링크 복사</button><p id="site-share-status" role="status"></p></div>
+</dialog>
+</body>
+</html>

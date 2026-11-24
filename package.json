@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "프랜차이즈 창업 분석 플랫폼",
   "scripts": {
-    "build": "node --check public/franchise-metrics.js && node --check public/app.js && node --check public/theme.js && node --check public/mlm.js && node --check public/mlm-changes.js && node --check public/search.js && node --check scripts/sync-ftc.mjs && node --check public/research.js && node --check public/site-actions.js && node --check public/visitor-stats.js && node --check api/visitor-stats.js",
+    "build": "node --check public/exit-cost.js && node --check public/franchise-metrics.js && node --check public/app.js && node --check public/theme.js && node --check public/mlm.js && node --check public/mlm-changes.js && node --check public/search.js && node --check scripts/sync-ftc.mjs && node --check public/research.js && node --check public/site-actions.js && node --check public/visitor-stats.js && node --check api/visitor-stats.js",
     "start": "python3 -m http.server 4173 --bind 127.0.0.1 --directory public"
   }
 }
