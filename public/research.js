@@ -1,4 +1,5 @@
 import './theme.js';
+import { compareFranchiseMetric, franchiseMetric } from './franchise-metrics.js';
 
 const pages = {
   companies: ['기업 한눈에 보기', '브랜드와 회사의 연도별 실적, 본사 소재지, 대표 연락처와 등록 변동을 찾아봐.'],
@@ -23,6 +24,7 @@ const numeric = raw => {
   return Number.isFinite(value) ? value : null;
 };
 const amount = raw => numeric(raw) === null ? missing : format.format(numeric(raw));
+const franchiseValue = (row, key) => franchiseMetric(row, key).label;
 const text = raw => raw == null || !String(raw).trim() ? missing : String(raw).trim();
 const normalize = raw => String(raw ?? '').normalize('NFKC').replace(/\s/g, '').toLowerCase();
 const registrationKey = raw => normalize(raw).replace(/[-–—]/g, '').replace(/제(?=\d)/g, '');
@@ -156,7 +158,24 @@ async function companies() {
       ? table(['기준 연도', '다단계판매 매출 (원)', '등록 판매원', '후원수당 (원)'],
         history.map(item => [item.year, amount(item.row.sales), amount(item.row.sellers), amount(item.row.commissions)]))
       : table(['기준 연도', '가맹점 수', '점포당 연매출 (원)', '공개 창업비용 (원)'],
-        history.map(item => [item.year, amount(item.row.stores), amount(item.row.revenue), amount(item.row.cost)])));
+        history.map(item => [item.year, ...['stores', 'revenue', 'cost'].map(key => franchiseValue(item.row, key))])));
+    const previous = history[1];
+    if (previous) {
+      const measures = isMlm
+        ? [['sales', '다단계판매 매출 (원)'], ['sellers', '등록 판매원 (명)'], ['commissions', '후원수당 (원)']]
+        : [['stores', '가맹점 수 (개)'], ['revenue', '점포당 연매출 (원)'],
+          ['opened', '신규 가맹점 (개)'], ['ended', '계약 종료 (개)'], ['cancelled', '계약 해지 (개)']];
+      const getValue = (entry, key) => isMlm ? numeric(entry[key]) : franchiseMetric(entry, key).value;
+      const getLabel = (entry, key) => isMlm ? amount(entry[key]) : franchiseValue(entry, key);
+      output.append(node('h3', '최근 두 공시 연도 비교'),
+        table(['항목', previous.year + '년', year + '년', '증감'], measures.map(([key, label]) => {
+          const oldValue = getValue(previous.row, key);
+          const newValue = getValue(row, key);
+          const delta = oldValue === null || newValue === null ? null : newValue - oldValue;
+          return [label, getLabel(previous.row, key), getLabel(row, key),
+            delta === null ? '비교 불가' : (delta > 0 ? '+' : '') + format.format(delta)];
+        })));
+    }
     if (!isMlm || !row.registration) return;
     const events = Object.values(changes.quarters).flatMap(quarter => quarter.events
       .filter(event => event.registration && registrationKey(event.registration) === registrationKey(row.registration))
@@ -164,7 +183,23 @@ async function companies() {
     events.sort((a, b) => String(b[0]).localeCompare(String(a[0])));
     output.append(node('h3', '등록 변동'), events.length
       ? table(['일자', '구분', '지역', '출처'], events)
-      : node('p', '등록번호가 일치하는 공시 내역이 없어.'));
+      : node('p', '확인한 분기 공시에서 일치하는 내역이 없어.'));
+    const coverage = Object.keys(changes.quarters).sort();
+    if (coverage.length) {
+      const covered = new Set(coverage);
+      const from = coverage[0];
+      const to = coverage.at(-1);
+      const gaps = [];
+      for (let y = Number(from.slice(0, 4)); y <= Number(to.slice(0, 4)); y++) {
+        for (let q = 1; q <= 4; q++) {
+          const key = y + '-' + q;
+          if (key >= from && key <= to && !covered.has(key)) gaps.push(y + '년 ' + q + '분기');
+        }
+      }
+      output.append(node('p', '확인 범위 ' + from.replace('-', '년 ') + '분기 ~ ' +
+        to.replace('-', '년 ') + '분기 · ' + coverage.length + '개 분기 공시' +
+        (gaps.length ? ' · 미확인 ' + gaps.join(', ') : ''), 'research-sources'));
+    }
   }
   function find(selected) {
     const keyword = normalize(query.value);
@@ -198,7 +233,7 @@ async function sectors() {
   const category = node('select');
   const year = node('select');
   const metric = node('select');
-  const metrics = [['stores', '가맹점 수'], ['revenue', '점포당 연매출'], ['cost', '공개 창업비용']];
+  const metrics = [['stores', '가맹점 수'], ['revenue', '점포당 연매출'], ['cost', '공개 창업비용 낮은 순']];
   const filters = node('div', undefined, 'filters');
   filters.append(field('업종', category, [['all', '전 업종'], ...categories.map(name => [name, name])]),
     field('순위 기준 연도', year, periods.map(value => [value, value])), field('순위 기준', metric, metrics));
@@ -213,14 +248,14 @@ async function sectors() {
       const rows = pick(period);
       return [period, amount(rows.length), ...['stores', 'opened', 'ended', 'cancelled'].map(key => amount(sum(rows, key)))];
     });
-    const leaders = pick(year.value).filter(row => numeric(row[metric.value]) !== null)
-      .sort((a, b) => numeric(b[metric.value]) - numeric(a[metric.value])).slice(0, 20);
+    const leaders = pick(year.value).filter(row => franchiseMetric(row, metric.value).value !== null)
+      .sort((a, b) => compareFranchiseMetric(a, b, metric.value)).slice(0, 20);
     output.replaceChildren(node('h2', '연도별 규모와 변동'),
       table(['기준 연도', '공시 브랜드 수', '가맹점 수', '신규 등록', '계약 종료', '계약 해지'], trend),
       node('h2', year.value + '년 브랜드 상위 20위'),
       leaders.length ? table(['순위', '브랜드', '가맹점 수', '점포당 연매출 (원)', '공개 창업비용 (원)'],
         leaders.map((row, index) => [index + 1, link(row.name, '/research.html?view=companies&id=' + encodeURIComponent('f-' + row.id)),
-          amount(row.stores), amount(row.revenue), amount(row.cost)])) : node('p', '공개된 순위 자료가 없어.'),
+          ...['stores', 'revenue', 'cost'].map(key => franchiseValue(row, key))])) : node('p', '공개된 순위 자료가 없어.'),
       source('공정거래위원회 가맹사업거래', ftc));
     setParams({category: category.value, year: year.value, metric: metric.value});
   }

@@ -1,4 +1,5 @@
 import './theme.js';
+import { compareFranchiseMetric, franchiseMetric } from './franchise-metrics.js';
 const element = id => document.getElementById(id);
 const number = new Intl.NumberFormat('ko-KR');
 const collator = new Intl.Collator('ko');
@@ -14,13 +15,9 @@ const make = (tag, text, className) => {
   if (className) node.className = className;
   return node;
 };
-const value = (key, val) => {
-  if (val == null) return '미공개';
-  if (typeof val === 'string') return val;
-  return number.format(val) + (counts.has(key) ? '개' : '원');
-};
 function reportedValue(row, key) {
-  return row.conflicts?.includes(key) ? '확인 필요' : value(key, row[key]);
+  const { value, label } = franchiseMetric(row, key);
+  return typeof value === 'number' ? label + (counts.has(key) ? '개' : '원') : label;
 }
 function logo(row) {
   const fallback = make('span', [...row.name].slice(0, 2).join(''), 'logo');
@@ -113,7 +110,29 @@ function compare() {
   table.append(thead, tbody);
   frame.append(table);
   const content = make('div');
-  content.append(make('p',catalog.preview ? '미리보기 · 공시 수치 확인 전' : currentYear() + '년 공시 기준'), frame);
+  content.append(make('p',catalog.preview ? '미리보기 · 공시 수치 확인 전' : currentYear() + '년 공시 기준'));
+  const link = make('input');
+  link.type = 'url';
+  link.readOnly = true;
+  const url = new URL('/', location.origin);
+  url.searchParams.set('year', currentYear());
+  for (const brand of brands) url.searchParams.append('compare', brand.id);
+  link.value = url.href;
+  link.setAttribute('aria-label', '브랜드 비교 공유 주소');
+  const copy = make('button', '비교표 링크 복사', 'compare-btn');
+  copy.type = 'button';
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(link.value);
+      copy.textContent = '복사했어';
+    } catch {
+      link.focus();
+      link.select();
+    }
+  });
+  const sharing = make('div', undefined, 'detail-actions');
+  sharing.append(link, copy);
+  content.append(sharing, frame);
   dialog('브랜드 비교', content);
 }
 function lookup(text) { return String(text ?? '').normalize('NFKC').toLowerCase().replace(/\s+/g,''); }
@@ -121,15 +140,16 @@ function refresh() {
   const category = element('industry').value;
   const key = element('metric').value;
   const query = lookup(element('query').value);
-  const sorted = rows.filter(r => !category || r.category === category).sort((a,b) => {
-    const left = a[key], right = b[key];
-    if (left == null && right != null) return 1;
-    if (right == null && left != null) return -1;
-    return (key === 'cost' ? left - right : right - left) || collator.compare(a.name,b.name);
-  });
+  const maxCost = element('max-cost').valueAsNumber * 10000;
+  const sorted = rows.filter(row => {
+    if (category && row.category !== category) return false;
+    if (!Number.isFinite(maxCost)) return true;
+    const cost = franchiseMetric(row, 'cost').value;
+    return cost !== null && cost <= maxCost;
+  }).sort((a, b) => compareFranchiseMetric(a, b, key) || collator.compare(a.name, b.name));
   let previous, rank = 0;
   shown = sorted.map((row,i) => {
-    const current = row[key];
+    const current = franchiseMetric(row, key).value;
     if (current != null && current !== previous) rank = i + 1;
     previous = current;
     return {row,rank:current == null ? null : rank};
@@ -184,7 +204,7 @@ function changeYear() {
 }
 element('open-compare').addEventListener('click',compare);
 element('year').addEventListener('change',changeYear);
-for (const id of ['query','industry','metric']) element(id).addEventListener(id === 'query' ? 'input' : 'change',() => {
+for (const id of ['query','industry','metric','max-cost']) element(id).addEventListener(['query','max-cost'].includes(id) ? 'input' : 'change',() => {
   if (!catalog) return;
   page = 0;
   refresh();
@@ -212,7 +232,14 @@ try {
   }
   changeYear();
   const match = shown.find(({row}) => row.id === params.get('id'));
-  if (match) detail(match.row,match.rank);
+  for (const id of params.getAll('compare')) {
+    if (selected.size === 4) break;
+    if (rows.some(row => row.id === id)) selected.add(id);
+  }
+  if (selected.size) {
+    updateCompare();
+    compare();
+  } else if (match) detail(match.row,match.rank);
 } catch (error) {
   element('data-status').textContent = '데이터를 읽지 못했어. 잠시 뒤 다시 열어 봐.';
   element('prev').disabled = element('next').disabled = true;

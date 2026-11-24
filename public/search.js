@@ -1,4 +1,5 @@
 import './theme.js';
+import { franchiseMetric } from './franchise-metrics.js';
 
 const get = id => document.getElementById('disclosure-' + id);
 const number = new Intl.NumberFormat('ko-KR');
@@ -7,11 +8,17 @@ const types = {
   franchise: '프랜차이즈',
   mlm: '다단계판매 실적',
   change: '등록 변동',
+  life: '생명보험',
+  nonlife: '손해보험',
+  ga: '법인보험대리점(GA)',
 };
 const endpoints = [
   ['franchise','/catalog.json'],
   ['mlm','/mlm.json'],
   ['change','/mlm-changes.json'],
+  ['life','/insurance-life.json'],
+  ['nonlife','/insurance-nonlife.json'],
+  ['ga','/insurance-ga.json'],
 ];
 const normalize = value => String(value ?? '').normalize('NFKC').toLowerCase()
   .replace(/\(주\)|\(유\)|주식회사|유한회사/g,'').replace(/[^\p{L}\p{N}]/gu,'');
@@ -25,14 +32,42 @@ const node = (tag,text,className) => {
 };
 const metric = (row,key,value,unit) => row.conflicts?.includes(key) ? '확인 필요' :
   typeof value === 'number' ? number.format(value) + unit : '미공개';
-const linkTo = (path,params,hash) => path + '?' + new URLSearchParams(params) + hash;
+const linkTo = (path,params,hash = '') => path + '?' + new URLSearchParams(params) + hash;
 
 function fromSource(type,data) {
+  const insuranceLink = (query, filters = {}) => linkTo('/research.html', {
+    view: 'insurance', insuranceType: type, insuranceQuery: query, ...filters,
+  });
+  if (type === 'life') return data.companies.map(row => ({
+    title: row.name.endsWith('생명') ? row.name : row.name + '생명',
+    year: String(data.year), type, terms: [row.name, row.name + '생명보험'],
+    facts: [['수입보험료', metric(row, 'premiums', row.premiums, '백만원')]],
+    href: insuranceLink(row.name), source: data.file || data.source,
+  }));
+  if (type === 'nonlife') return data.companies.flatMap(row =>
+    Object.entries(row.share).map(([year, share]) => ({
+      title: row.name, year, type, terms: [row.name],
+      facts: [['보험료 점유율', metric(row, 'share', share, '%')]],
+      href: insuranceLink(row.name, {nonlifeYear: year}),
+      source: data.source,
+    })));
+  if (type === 'ga') return Object.entries(data.periods).flatMap(([period, rows]) =>
+    rows.map(row => ({
+      title: row.name, year: period.slice(0, 4), type,
+      context: (period.endsWith('06') ? '상반기' : '12월') + (row.registration ? ' · ' + row.registration : ''),
+      terms: [row.name, row.registration, row.address, row.region],
+      facts: [['설계사 수', metric(row, 'agents', row.agents, '명')]],
+      href: insuranceLink(row.registration || row.name, {gaPeriod: period}), source: data.source,
+    })));
   if (type === 'franchise') return Object.entries(data.years).flatMap(([year,rows]) =>
     rows.map(row => ({
       title:row.name, year, type, terms:[row.name,row.company,row.category,row.sector],
       context:[row.company,row.category].filter(Boolean).join(' · '),
-      facts:[['가맹점',metric(row,'stores',row.stores,'개')],['점포당 연매출',metric(row,'revenue',row.revenue,'원')],['공개 창업비용',metric(row,'cost',row.cost,'원')]],
+      facts:[['가맹점','stores','개'],['점포당 연매출','revenue','원'],['공개 창업비용','cost','원']]
+        .map(([name,key,unit]) => {
+          const {value,label} = franchiseMetric(row,key);
+          return [name, typeof value === 'number' ? label + unit : label];
+        }),
       href:linkTo('/',{year,q:row.name,id:row.id},'#ranking'),
     })));
   if (type === 'mlm') return Object.entries(data.years).flatMap(([year,dataset]) =>
